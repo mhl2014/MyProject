@@ -7,10 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 public class MainActivity extends AppCompatActivity {
 
     private ApplicationMy appContext;
     private Button listAllButton;
+    private Button signInUser;
+
+    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,5 +39,10 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent openListAll = new Intent(this, ListAllActivity.class);
         startActivity(openListAll);
+    }
+
+    public void btnSignInUser(View v)
+    {
+
     }
 }
