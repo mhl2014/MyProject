@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "124293616676",
+    "project_id": "calcium-pod-132923"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124293616676:android:e74c8002c4f52956",
+        "android_client_info": {
+          "package_name": "um.feri.mihael.wi_finder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124293616676-3nank38moun8sio63je7rf5hmk3k2eah.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "um.feri.mihael.wi_finder",
+            "certificate_hash": "212B1CD933748CD45804D1E63CBCD0422AAC0546"
+          }
+        },
+        {
+          "client_id": "124293616676-rs7td493go2t17ji6nlva9c6vnsvt40h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTGrTgxyropyjwNTeUYMyMK95OcbIKt1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
