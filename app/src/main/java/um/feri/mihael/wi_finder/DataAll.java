@@ -84,8 +84,9 @@ public class DataAll {
         all.dodaj(new HotSpot("Space Marines", "smGeneral", 46.3622743, 15.110658199999989, all.users.get(1)));
         all.dodaj(new HotSpot("SitecomA35798", "ivBf686tM9", 46.3569675, 15.129486600000064, all.users.get(2)));
         return all;
-
     }
+
+
 
 
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 public class ListAllActivity extends AppCompatActivity {
 
@@ -27,8 +28,24 @@ public class ListAllActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         app = new ApplicationMy();
+        app.setApp(getApplication());
 
-        adapter = new AdapterHotSpot(DataAll.getScenarij1Data(), this);
+        String toastText;
+        if(!app.loadData())
+        {
+            //Ce ne uspemo dobiti podatkov iz json datoteke nastavimo "dummy data"
+            app.setAll(DataAll.getScenarij1Data());
+
+            toastText = "Could not load hotspots!";
+        }
+        else
+        {
+            toastText = "Successfully loaded hotspots!";
+        }
+
+        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
+
+        adapter = new AdapterHotSpot(app.getAll(), this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -61,5 +78,23 @@ public class ListAllActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+
+        String toastText;
+        if(app.saveData())
+        {
+            toastText = "Hotspots saved succesfully!";
+        }
+        else
+        {
+            toastText = "Error saving Hotspots!";
+        }
+
+        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
     }
 }

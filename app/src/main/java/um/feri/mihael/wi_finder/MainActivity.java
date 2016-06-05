@@ -94,9 +94,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 //((TextView)findViewById(R.id.TestText)).setText(accountInfo.getDisplayName().toString());
 
                 notifyToastText = "Welcome " + accountInfo.getDisplayName() + " !";
-                notifyToast = Toast.makeText(getApplicationContext(), notifyToastText, Toast.LENGTH_SHORT);
-                notifyToast.show();
             }
+            else
+            {
+                notifyToastText = "Login failed!";
+            }
+
+            notifyToast = Toast.makeText(getApplicationContext(), notifyToastText, Toast.LENGTH_SHORT);
+            notifyToast.show();
         }
     }
 
