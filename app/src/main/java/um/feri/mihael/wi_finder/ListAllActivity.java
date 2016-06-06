@@ -2,11 +2,12 @@ package um.feri.mihael.wi_finder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 public class ListAllActivity extends AppCompatActivity {
@@ -15,11 +16,21 @@ public class ListAllActivity extends AppCompatActivity {
     private AdapterHotSpot adapter;
     private RecyclerView.LayoutManager layoutManager;
     private ApplicationMy app;
+    private FloatingActionButton addFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_all);
+
+        addFab = (FloatingActionButton) findViewById(R.id.addFab);
+        addFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addNewIntent = new Intent(ListAllActivity.this, AddNewActivity.class);
+                startActivityForResult(addNewIntent, CallCodes.REQ_ADD_ITEM);
+            }
+        });
 
         recyclerView = (RecyclerView) findViewById(R.id.listAllView);
         recyclerView.setHasFixedSize(true);
@@ -59,23 +70,30 @@ public class ListAllActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == Activity.RESULT_OK) {
-            if(requestCode == AdapterHotSpot.EDIT_DATA_REQUEST)
-            {
-                Bundle extras = data.getExtras();
 
-                if (extras.getInt(EditHotSpotActivity.RETURN_EDIT_ACTION, 2) == EditHotSpotActivity.ACTION_DELETE)
+            Bundle extras = data.getExtras();
+
+            if(requestCode == CallCodes.REQ_EDIT_OR_DEL_ITEM)
+            {
+                if (extras.getInt(CallCodes.RETURN_EDIT_ACTION, -1) == CallCodes.ACTION_DELETE)
                 {
-                    adapter.deleteItem(extras.getInt(EditHotSpotActivity.RETURN_HOTSPOT_POS));
+                    adapter.deleteItem(extras.getInt(CallCodes.RETURN_HOTSPOT_POS));
                 }
-                else if (extras.getInt(EditHotSpotActivity.RETURN_EDIT_ACTION, 2) == EditHotSpotActivity.ACTION_SAVE)
+                else if (extras.getInt(CallCodes.RETURN_EDIT_ACTION, -1) == CallCodes.ACTION_SAVE)
                 {
                     //String mySSID = extras.getString(EditHotSpotActivity.RETURN_HOTSPOT_SSID);
                     //String myPass = extras.getString(EditHotSpotActivity.RETURN_HOTSPOT_SEC_KEY);
 
-                    adapter.updateItem(extras.getInt(EditHotSpotActivity.RETURN_HOTSPOT_POS),
-                            extras.getString(EditHotSpotActivity.RETURN_HOTSPOT_SSID),
-                            extras.getString(EditHotSpotActivity.RETURN_HOTSPOT_SEC_KEY));
+                    adapter.updateItem(extras.getInt(CallCodes.RETURN_HOTSPOT_POS),
+                            extras.getString(CallCodes.RETURN_HOTSPOT_SSID),
+                            extras.getString(CallCodes.RETURN_HOTSPOT_SEC_KEY));
                 }
+            }
+            else if(requestCode == CallCodes.REQ_ADD_ITEM)
+            {
+                adapter.addItem(new HotSpot(extras.getString(CallCodes.EXTRA_HOTSPOT_SSID),
+                        extras.getString(CallCodes.EXTRA_HOTSPOT_SEC_KEY),
+                        0.0, 0.0, new User("testIme", "test@test.com")));
             }
         }
     }

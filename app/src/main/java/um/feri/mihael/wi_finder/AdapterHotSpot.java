@@ -6,16 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
  * Created by Mihael on 30. 05. 2016.
  */
+
 public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHolder> {
 
-    public static final int EDIT_DATA_REQUEST = 0;
     private DataAll dataSet;
     Activity ac;
 
@@ -33,8 +32,6 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
         public ImageView iv;
        // public Button showOnMapButton;
 
-        //public static final int EDIT_DATA_REQUEST = 1;
-
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -48,19 +45,18 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
 
         @Override
         public void onClick(View view) {
-
             finder = dataSet.getHostSpotBySSID(txtSSID.getText().toString()).getUser();
 
             Intent interactActivity = new Intent (ac, EditHotSpotActivity.class);
 
-            interactActivity.putExtra(EditHotSpotActivity.EXTRA_HOTSPOT_POS, getAdapterPosition());
-            interactActivity.putExtra(EditHotSpotActivity.EXTRA_HOTSPOT_SSID, this.txtSSID.getText());
-            interactActivity.putExtra(EditHotSpotActivity.EXTRA_HOTSPOT_SEC_KEY, this.txtSecKey.getText());
-            interactActivity.putExtra(EditHotSpotActivity.EXTRA_USER_NAME, this.finder.getName());
-            interactActivity.putExtra(EditHotSpotActivity.EXTRA_USER_EMAIL, this.finder.getEmail());
+            interactActivity.putExtra(CallCodes.EXTRA_HOTSPOT_POS, getAdapterPosition());
+            interactActivity.putExtra(CallCodes.EXTRA_HOTSPOT_SSID, this.txtSSID.getText());
+            interactActivity.putExtra(CallCodes.EXTRA_HOTSPOT_SEC_KEY, this.txtSecKey.getText());
+            interactActivity.putExtra(CallCodes.EXTRA_USER_NAME, this.finder.getName());
+            interactActivity.putExtra(CallCodes.EXTRA_USER_EMAIL, this.finder.getEmail());
 
             //ac.startActivity(interactActivity);
-            ac.startActivityForResult(interactActivity, EDIT_DATA_REQUEST);
+            ac.startActivityForResult(interactActivity, CallCodes.REQ_EDIT_OR_DEL_ITEM);
         }
     }
 
@@ -109,5 +105,11 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
     {
         dataSet.deleteHotSpot(pos);
         notifyItemRemoved(pos);
+    }
+
+    public void addItem(HotSpot hs)
+    {
+        dataSet.dodaj(hs);
+        notifyItemInserted(dataSet.hotSpotSize() - 1);
     }
 }

@@ -23,22 +23,6 @@ public class EditHotSpotActivity extends AppCompatActivity {
 
     private int position;
 
-    public  static final String EXTRA_HOTSPOT_POS = "um.feri.mihael.wi_finfer.POS";
-    public static final String EXTRA_HOTSPOT_SSID = "um.feri.mihael.wi_finder.SSID";
-    public static final String EXTRA_HOTSPOT_SEC_KEY = "um.feri.mihael.wi_finder.SECKEY";
-    public static final String EXTRA_USER_NAME = "um.feri.mihael.wi_finder.USERNAME";
-    public static final String EXTRA_USER_EMAIL = "um.feri.mihael.wi_finder.EMAIL";
-
-    public static final int ACTION_SAVE = 0;
-    public static final int ACTION_DELETE = 1;
-
-    public static final String RETURN_EDIT_ACTION = "um.feri.mihael.wi_finfer.RETACT";
-    public static final String RETURN_HOTSPOT_POS = "um.feri.mihael.wi_finfer.RETNPOS";
-    public static final String RETURN_HOTSPOT_SSID = "um.feri.mihael.wi_finder.RETNSSID";
-    public static final String RETURN_HOTSPOT_SEC_KEY = "um.feri.mihael.wi_finder.RETNSECKEY";
-    public static final String RETURN_USER_NAME = "um.feri.mihael.wi_finder.RETNUSERNAME";
-    public static final String RETURN_USER_EMAIL = "um.feri.mihael.wi_finder.RETNEMAIL";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +37,11 @@ public class EditHotSpotActivity extends AppCompatActivity {
 
         if(extras != null)
         {
-            position = extras.getInt(EXTRA_HOTSPOT_POS);
-            textSSID.setText(extras.getString(EXTRA_HOTSPOT_SSID));
-            textSecKey.setText(extras.getString(EXTRA_HOTSPOT_SEC_KEY));
-            textUserName.setText(extras.getString(EXTRA_USER_NAME));
-            textEmail.setText(extras.getString(EXTRA_USER_EMAIL));
+            position = extras.getInt(CallCodes.EXTRA_HOTSPOT_POS);
+            textSSID.setText(extras.getString(CallCodes.EXTRA_HOTSPOT_SSID));
+            textSecKey.setText(extras.getString(CallCodes.EXTRA_HOTSPOT_SEC_KEY));
+            textUserName.setText(extras.getString(CallCodes.EXTRA_USER_NAME));
+            textEmail.setText(extras.getString(CallCodes.EXTRA_USER_EMAIL));
         }
 
     }
@@ -66,12 +50,12 @@ public class EditHotSpotActivity extends AppCompatActivity {
     {
         Intent saveIntent = new Intent();
 
-        saveIntent.putExtra(RETURN_HOTSPOT_POS, position);
-        saveIntent.putExtra(RETURN_EDIT_ACTION, ACTION_SAVE);
-        saveIntent.putExtra(RETURN_HOTSPOT_SSID, textSSID.getText().toString());
-        saveIntent.putExtra(RETURN_HOTSPOT_SEC_KEY, textSecKey.getText().toString());
-        saveIntent.putExtra(RETURN_USER_NAME, textUserName.getText().toString());
-        saveIntent.putExtra(RETURN_USER_EMAIL, textEmail.getText().toString());
+        saveIntent.putExtra(CallCodes.RETURN_HOTSPOT_POS, position);
+        saveIntent.putExtra(CallCodes.RETURN_EDIT_ACTION, CallCodes.ACTION_SAVE);
+        saveIntent.putExtra(CallCodes.RETURN_HOTSPOT_SSID, textSSID.getText().toString());
+        saveIntent.putExtra(CallCodes.RETURN_HOTSPOT_SEC_KEY, textSecKey.getText().toString());
+        saveIntent.putExtra(CallCodes.RETURN_USER_NAME, textUserName.getText().toString());
+        saveIntent.putExtra(CallCodes.RETURN_USER_EMAIL, textEmail.getText().toString());
         setResult(Activity.RESULT_OK, saveIntent);
 
         finish();
@@ -81,8 +65,8 @@ public class EditHotSpotActivity extends AppCompatActivity {
     {
         Intent deleteIntent = new Intent();
 
-        deleteIntent.putExtra(RETURN_EDIT_ACTION, ACTION_DELETE);
-        deleteIntent.putExtra(RETURN_HOTSPOT_POS, position);
+        deleteIntent.putExtra(CallCodes.RETURN_EDIT_ACTION, CallCodes.ACTION_DELETE);
+        deleteIntent.putExtra(CallCodes.RETURN_HOTSPOT_POS, position);
         setResult(Activity.RESULT_OK, deleteIntent);
 
         finish();
