@@ -23,11 +23,14 @@ public class CallCodes {
     public static final int ACTION_SCAN = 3;
 
     public static final String RETURN_EDIT_ACTION = "um.feri.mihael.wi_finfer.RETACT";
-
     public static final String RETURN_HOTSPOT_POS = "um.feri.mihael.wi_finfer.RETNPOS";
     public static final String RETURN_HOTSPOT_SSID = "um.feri.mihael.wi_finder.RETNSSID";
     public static final String RETURN_HOTSPOT_SEC_KEY = "um.feri.mihael.wi_finder.RETNSECKEY";
     public static final String RETURN_USER_NAME = "um.feri.mihael.wi_finder.RETNUSERNAME";
     public static final String RETURN_USER_EMAIL = "um.feri.mihael.wi_finder.RETNEMAIL";
+
+    public static final String SCAN_MODE = "SCAN_MODE";
+    public static final String QR_CODE_MODE = "QR_CODE_MODE";
+    public static final String SCAN_RESULT = "SCAN_RESULT";
 
 }

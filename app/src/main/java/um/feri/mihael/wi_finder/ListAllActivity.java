@@ -91,8 +91,8 @@ public class ListAllActivity extends AppCompatActivity {
             }
             else if(requestCode == CallCodes.REQ_ADD_ITEM)
             {
-                adapter.addItem(new HotSpot(extras.getString(CallCodes.EXTRA_HOTSPOT_SSID),
-                        extras.getString(CallCodes.EXTRA_HOTSPOT_SEC_KEY),
+                adapter.addItem(new HotSpot(extras.getString(CallCodes.RETURN_HOTSPOT_SSID),
+                        extras.getString(CallCodes.RETURN_HOTSPOT_SEC_KEY),
                         0.0, 0.0, new User("testIme", "test@test.com")));
             }
         }

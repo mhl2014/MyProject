@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Wi-Finder</string>
     <string name="title_activity_view_location">Map</string>
+    <string name="marketUri">market://search?q=pname:</string>
 </resources>
