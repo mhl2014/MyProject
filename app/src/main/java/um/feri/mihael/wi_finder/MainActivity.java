@@ -1,6 +1,7 @@
 package um.feri.mihael.wi_finder;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,16 +26,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleSignInOptions gso;
     private GoogleSignInAccount accountInfo;
 
-    private Toast notifyToast;
+    //private Toast notifyToast;
 
     private String notifyToastText;
+
+    private Resources res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        res = getResources();
+
         setContentView(R.layout.activity_main);
 
-        DataAll all = DataAll.getScenarij1Data(); //testni podatki
+        //DataAll all = DataAll.getScenarij1Data(); //testni podatki
 
         //TextView testText = (TextView) findViewById(R.id.TestText);
         //testText.setText(all.toString());
@@ -42,8 +48,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         //ApplicationMy app = (ApplicationMy) getApplication();
 
         listAllButton = (Button)findViewById(R.id.buttonListAll);
+        listAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent openListAll = new Intent(MainActivity.this, ListAllActivity.class);
+                startActivity(openListAll);
+            }
+        });
+
         signInUser = (SignInButton)findViewById(R.id.btnSignInUser);
-        appContext = new ApplicationMy(all, getApplication());
+        signInUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
+                startActivityForResult(signInIntent, CallCodes.REQ_SIGN_IN);
+            }
+        });
+
+        //appContext = new ApplicationMy(all, getApplication());
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -54,23 +77,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
-        signInUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
-                startActivityForResult(signInIntent, CallCodes.REQ_SIGN_IN);
-            }
-        });
-
     }
-
+/*
     public void btnListAllClick(View v)
     {
-        Intent openListAll = new Intent(this, ListAllActivity.class);
-        startActivity(openListAll);
-    }
 
+    }
+*/
    // public void btnSignInUser(View v)
    // {
    //
@@ -89,21 +102,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 accountInfo = result.getSignInAccount();
                 //((TextView)findViewById(R.id.TestText)).setText(accountInfo.getDisplayName().toString());
 
-                notifyToastText = "Welcome " + accountInfo.getDisplayName() + " !";
+                notifyToastText = res.getString(R.string.welcome) + accountInfo.getDisplayName() + " !";
             }
             else
             {
-                notifyToastText = "Login failed!";
+                notifyToastText = res.getString(R.string.loginFailure);
             }
 
-            notifyToast = Toast.makeText(getApplicationContext(), notifyToastText, Toast.LENGTH_SHORT);
-            notifyToast.show();
+            Toast.makeText(getApplicationContext(), notifyToastText, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult)
     {
-
+        Toast.makeText(this, res.getString(R.string.loginFailure) + ": " + connectionResult.getErrorMessage(), Toast.LENGTH_LONG)
+                .show();
     }
 }

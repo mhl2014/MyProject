@@ -21,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="List all Hotspots"
-        android:onClick="btnListAllClick"
         android:id="@+id/buttonListAll"
         android:layout_marginTop="48dp"
         android:layout_alignParentTop="true"

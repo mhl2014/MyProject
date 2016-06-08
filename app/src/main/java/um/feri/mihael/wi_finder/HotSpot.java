@@ -4,14 +4,17 @@ package um.feri.mihael.wi_finder;
  * Created by Mihael on 30. 05. 2016.
  */
 public class HotSpot {
+
+    public enum Accessibility { PUBLIC, SECURE, LOGIN, INACCESSIBLE }
     //private int identifier;
     private String ssid;
     private String securityKey;
     private double latitude;
     private double longitude;
     private User user;
+    private Accessibility accessLevel;
 
-    public HotSpot(/*int id, */String ssid, String securityKey, double latitude, double longitude, User user)
+    public HotSpot(/*int id, */String ssid, String securityKey, double latitude, double longitude, User user, Accessibility accessLevel)
     {
         //this.identifier = id;
         this.ssid = ssid;
@@ -19,6 +22,7 @@ public class HotSpot {
         this.latitude = latitude;
         this.longitude = longitude;
         this.user = user;
+        this.accessLevel = accessLevel;
     }
 
     @Override
@@ -29,6 +33,7 @@ public class HotSpot {
                 ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
                 ", user='" + user + '\'' +
+                ", accessLevel='" + accessLevel + '\'' +
                 '}';
     }
 

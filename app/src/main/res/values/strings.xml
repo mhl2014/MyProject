@@ -1,5 +1,26 @@
 <resources>
     <string name="app_name">Wi-Finder</string>
     <string name="title_activity_view_location">Map</string>
+
+    <!--RESOURCE STRINGS-->
+    <string name="activityNotFound">No suitable activity found!</string>
+    <string name="loadSuccess">Successfully loaded from file!</string>
+    <string name="loadFailure">Could not load from file!</string>
+    <string name="saveSuccess">Successfully saved to file!</string>
+    <string name="saveFailure">Could not save to file!</string>
+    <string name="fileNotFound">File not found!</string>
+    <string name="loginFailure">Login failed</string>
+    <string name="welcome">Welcome</string>
     <string name="marketUri">market://search?q=pname:</string>
+    <string name="zxingUri">com.google.zxing.client.android</string>
+    <string name="zxingNotFound">Zxing not found</string>
+    <string name="zxingDownload">Download Zxing now?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string-array name="accessibility">
+        <item name="public">Open network</item>
+        <item name="secure">Password required</item>
+        <item name="login">Login required</item>
+        <item name="inaccessible">Publicly inaccessible</item>
+    </string-array>
 </resources>

@@ -32,5 +32,13 @@ public class CallCodes {
     public static final String SCAN_MODE = "SCAN_MODE";
     public static final String QR_CODE_MODE = "QR_CODE_MODE";
     public static final String SCAN_RESULT = "SCAN_RESULT";
+    public static final String RETURN_HOTSPOT_ACCESS = "um.feri.mihael.wi_finder.RETACCESS";
+
+    public static final String ACCESS_PUBLIC = "HOTSPOT_PUBLIC";
+    public static final String ACCESS_SECURE = "HOTSPOT_SECURE";
+    public static final String ACCESS_LOGIN  = "HOTSPOT_LOGIN";
+    public static final String ACCESS_INACCESSIBLE = "HOTSPOT_INACCESSIBLE";
+
+    public static final String ERR_FILE_NOT_FOUND = "um.feri.mihael.wi_finder.FILENOTFOUND";
 
 }

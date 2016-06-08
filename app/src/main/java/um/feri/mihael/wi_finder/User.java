@@ -22,11 +22,20 @@ public class User {
 
     private String name;
     private String email;
+    private int points;
 
     public User(String name, String email)
     {
         this.name = name;
         this.email = email;
+        this.points = 0;
+    }
+
+    public User(String name, String email, int points)
+    {
+        this.name = name;
+        this.email = email;
+        this.points = points;
     }
 
     @Override
@@ -34,6 +43,7 @@ public class User {
         return "User{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", points='" + points +'\'' +
                 '}';
     }
 }

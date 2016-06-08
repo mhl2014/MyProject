@@ -158,6 +158,7 @@ public class ApplicationMy{
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 DataAll readData = gson.fromJson(strBuffer.toString(), DataAll.class);
 
+                /*
                 if(readData == null)
                 {
                     System.out.println("Json format Error");
@@ -166,12 +167,13 @@ public class ApplicationMy{
                 {
                     System.out.println(readData.toString());
                 }
+                */
 
                 return readData;
             }
             catch (IOException ex)
             {
-
+                ex.printStackTrace();
             }
         }
 

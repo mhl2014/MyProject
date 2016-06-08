@@ -71,7 +71,6 @@ public class DataAll {
         return found;
     }
 
-
     public static DataAll getScenarij1Data() {
         DataAll all = new DataAll();
         all.dodaj(new User("Matej Črepinšek", "matej@najdi.si"));
@@ -79,14 +78,11 @@ public class DataAll {
         all.dodaj(new User("Aleš Stroka", "as123@najdi.uk.si"));
         all.dodaj(new User("Janez Novak", "janez.novak@najdi.si"));
         all.dodaj(new User("Marjetka Kos Cerar", "nedela@naj12233 di.si"));
-        all.dodaj(new HotSpot("154ea2", "MyPassword", 46.47817490000001, 15.715625300000056, all.users.get(0)));
-        all.dodaj(new HotSpot("Stanovanje 7", "stanovanje 007", 46.47817360000003, 15.726625300000444, all.users.get(1)));
-        all.dodaj(new HotSpot("Space Marines", "smGeneral", 46.3622743, 15.110658199999989, all.users.get(1)));
-        all.dodaj(new HotSpot("SitecomA35798", "ivBf686tM9", 46.3569675, 15.129486600000064, all.users.get(2)));
+        all.dodaj(new HotSpot("154ea2", "MyPassword", 46.47817490000001, 15.715625300000056, all.users.get(0), HotSpot.Accessibility.SECURE));
+        all.dodaj(new HotSpot("Stanovanje 7", "stanovanje 007", 46.47817360000003, 15.726625300000444, all.users.get(1), HotSpot.Accessibility.SECURE));
+        all.dodaj(new HotSpot("Space Marines", "smGeneral", 46.3622743, 15.110658199999989, all.users.get(1), HotSpot.Accessibility.SECURE));
+        all.dodaj(new HotSpot("SitecomA35798", "ivBf686tM9", 46.3569675, 15.129486600000064, all.users.get(2), HotSpot.Accessibility.SECURE));
         return all;
     }
-
-
-
 
 }
