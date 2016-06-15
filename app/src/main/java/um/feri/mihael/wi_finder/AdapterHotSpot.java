@@ -28,7 +28,6 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
     {
         public TextView txtSSID;
         public TextView txtSecKey;
-        public User finder;
         public ImageView iv;
        // public Button showOnMapButton;
 
@@ -45,18 +44,22 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
 
         @Override
         public void onClick(View view) {
-            finder = dataSet.getHostSpotBySSID(txtSSID.getText().toString()).getUser();
+            HotSpot hotSpot = dataSet.getHotSpot(getAdapterPosition());
+            User finder = hotSpot.getUser();
 
             Intent interactActivity = new Intent (ac, EditHotSpotActivity.class);
 
-            interactActivity.putExtra(CallCodes.EXTRA_HOTSPOT_POS, getAdapterPosition());
-            interactActivity.putExtra(CallCodes.EXTRA_HOTSPOT_SSID, this.txtSSID.getText());
-            interactActivity.putExtra(CallCodes.EXTRA_HOTSPOT_SEC_KEY, this.txtSecKey.getText());
-            interactActivity.putExtra(CallCodes.EXTRA_USER_NAME, this.finder.getName());
-            interactActivity.putExtra(CallCodes.EXTRA_USER_EMAIL, this.finder.getEmail());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_POS, getAdapterPosition());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_SSID, this.txtSSID.getText());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, this.txtSecKey.getText());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, hotSpot.getLatitude());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, hotSpot.getLongitude());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, hotSpot.getAccessLevel().name());
+            interactActivity.putExtra(Utilities.EXTRA_USER_NAME, finder.getName());
+            interactActivity.putExtra(Utilities.EXTRA_USER_EMAIL, finder.getEmail());
 
             //ac.startActivity(interactActivity);
-            ac.startActivityForResult(interactActivity, CallCodes.REQ_EDIT_OR_DEL_ITEM);
+            ac.startActivityForResult(interactActivity, Utilities.REQ_EDIT_OR_DEL_ITEM);
         }
     }
 
@@ -95,9 +98,9 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
         return dataSet.hotSpotSize();
     }
 
-    public void updateItem(int pos, String newSSID, String newSecKey)
+    public void updateItem(int pos, String newSSID, String newSecKey, double latitude, double longitude, HotSpot.Accessibility accessibility)
     {
-        dataSet.updateHotSpot(pos, newSSID, newSecKey);
+        dataSet.updateHotSpot(pos, newSSID, newSecKey, latitude, longitude, accessibility);
         notifyItemChanged(pos);
     }
 
@@ -109,7 +112,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
 
     public void addItem(HotSpot hs)
     {
-        dataSet.dodaj(hs);
+        dataSet.addHotSpot(hs);
         notifyItemInserted(dataSet.hotSpotSize() - 1);
     }
 }

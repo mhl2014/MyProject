@@ -33,7 +33,7 @@ public class ListAllActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addNewIntent = new Intent(ListAllActivity.this, AddNewActivity.class);
-                startActivityForResult(addNewIntent, CallCodes.REQ_ADD_ITEM);
+                startActivityForResult(addNewIntent, Utilities.REQ_ADD_ITEM);
             }
         });
 
@@ -51,7 +51,6 @@ public class ListAllActivity extends AppCompatActivity {
         {
             //Ce ne uspemo dobiti podatkov iz json datoteke nastavimo "dummy data"
             app.setAll(DataAll.getScenarij1Data());
-
             toastText = res.getString(R.string.loadFailure);
         }
         else
@@ -78,32 +77,29 @@ public class ListAllActivity extends AppCompatActivity {
 
             Bundle extras = data.getExtras();
 
-            if(requestCode == CallCodes.REQ_EDIT_OR_DEL_ITEM)
+            if(requestCode == Utilities.REQ_EDIT_OR_DEL_ITEM)
             {
-                if (extras.getInt(CallCodes.RETURN_EDIT_ACTION, -1) == CallCodes.ACTION_DELETE)
+                if (extras.getInt(Utilities.RETURN_EDIT_ACTION, -1) == Utilities.ACTION_DELETE)
                 {
-                    adapter.deleteItem(extras.getInt(CallCodes.RETURN_HOTSPOT_POS));
+                    adapter.deleteItem(extras.getInt(Utilities.RETURN_HOTSPOT_POS));
                 }
-                else if (extras.getInt(CallCodes.RETURN_EDIT_ACTION, -1) == CallCodes.ACTION_SAVE)
+                else if (extras.getInt(Utilities.RETURN_EDIT_ACTION, -1) == Utilities.ACTION_SAVE)
                 {
-                    //String mySSID = extras.getString(EditHotSpotActivity.RETURN_HOTSPOT_SSID);
-                    //String myPass = extras.getString(EditHotSpotActivity.RETURN_HOTSPOT_SEC_KEY);
-
-                    adapter.updateItem(extras.getInt(CallCodes.RETURN_HOTSPOT_POS),
-                            extras.getString(CallCodes.RETURN_HOTSPOT_SSID),
-                            extras.getString(CallCodes.RETURN_HOTSPOT_SEC_KEY));
+                    adapter.updateItem(extras.getInt(Utilities.RETURN_HOTSPOT_POS),
+                            extras.getString(Utilities.RETURN_HOTSPOT_SSID),
+                            extras.getString(Utilities.RETURN_HOTSPOT_SEC_KEY),
+                            extras.getDouble(Utilities.RETURN_HOTSPOT_LATITUDE),
+                            extras.getDouble(Utilities.RETURN_HOTSPOT_LONGITUDE),
+                            HotSpot.Accessibility.valueOf(extras.getString(Utilities.RETURN_HOTSPOT_ACCESS)));
                 }
             }
-            else if(requestCode == CallCodes.REQ_ADD_ITEM)
+            else if(requestCode == Utilities.REQ_ADD_ITEM)
             {
-                String access = extras.getString(CallCodes.RETURN_HOTSPOT_ACCESS);
-                //String array[] = res.getStringArray(R.array.accessibility);
-
-                //if(access.equals(R.array.accessibility))
-
-                adapter.addItem(new HotSpot(extras.getString(CallCodes.RETURN_HOTSPOT_SSID),
-                        extras.getString(CallCodes.RETURN_HOTSPOT_SEC_KEY),
-                        0.0, 0.0, new User("testIme", "test@test.com"),));
+                adapter.addItem(new HotSpot(extras.getString(Utilities.RETURN_HOTSPOT_SSID),
+                        extras.getString(Utilities.RETURN_HOTSPOT_SEC_KEY),
+                        extras.getDouble(Utilities.RETURN_HOTSPOT_LATITUDE),
+                        extras.getDouble(Utilities.RETURN_HOTSPOT_LONGITUDE), new User("testIme", "test@test.com"),
+                        HotSpot.Accessibility.valueOf(extras.getString(Utilities.RETURN_HOTSPOT_ACCESS))));
             }
         }
     }

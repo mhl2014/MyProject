@@ -93,7 +93,6 @@ public class ApplicationMy{
                 printWriter.close();
 
                 return true;
-
             }
             catch (FileNotFoundException e)
             {
@@ -143,7 +142,7 @@ public class ApplicationMy{
         {
             try
             {
-                File file = new File(app.getExternalFilesDir(DATA_DIR),"" + fileName);
+                File file = new File(app.getExternalFilesDir(DATA_DIR), "" + fileName);
                 FileInputStream fstream = new FileInputStream(file);
                 DataInputStream inStream = new DataInputStream(fstream);
                 BufferedReader buffReader = new BufferedReader(new InputStreamReader(inStream));
@@ -158,17 +157,6 @@ public class ApplicationMy{
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 DataAll readData = gson.fromJson(strBuffer.toString(), DataAll.class);
 
-                /*
-                if(readData == null)
-                {
-                    System.out.println("Json format Error");
-                }
-                else
-                {
-                    System.out.println(readData.toString());
-                }
-                */
-
                 return readData;
             }
             catch (IOException ex)
@@ -176,7 +164,6 @@ public class ApplicationMy{
                 ex.printStackTrace();
             }
         }
-
         return null;
     }
 }

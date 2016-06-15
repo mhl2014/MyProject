@@ -1,6 +1,5 @@
 package um.feri.mihael.wi_finder;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -10,7 +9,6 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,7 +27,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
     private Button btnScan;
     private Button btnAdd;
 
-    private Spinner spinnerAccessability;
+    private Spinner spinnerAccessibility;
 
     public String accessLevel;
 
@@ -50,9 +48,9 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             public void onClick(View view) {
                 try
                 {
-                    Intent scanIntent = new Intent(CallCodes.REQ_SCAN);
-                    scanIntent.putExtra(CallCodes.SCAN_MODE, CallCodes.QR_CODE_MODE);
-                    startActivityForResult(scanIntent, CallCodes.ACTION_SCAN);
+                    Intent scanIntent = new Intent(Utilities.REQ_SCAN);
+                    scanIntent.putExtra(Utilities.SCAN_MODE, Utilities.QR_CODE_MODE);
+                    startActivityForResult(scanIntent, Utilities.ACTION_SCAN);
                 }
                 catch (ActivityNotFoundException anfe)
                 {
@@ -70,27 +68,21 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onClick(View view) {
                 Intent addNewIntent = new Intent();
-                addNewIntent.putExtra(CallCodes.RETURN_HOTSPOT_SSID, addSSID.getText().toString());
-                addNewIntent.putExtra(CallCodes.RETURN_HOTSPOT_SEC_KEY, addSecKey.getText().toString());
-                addNewIntent.putExtra(CallCodes.RETURN_HOTSPOT_ACCESS, );
+                addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_SSID, addSSID.getText().toString());
+                addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_SEC_KEY, addSecKey.getText().toString());
+                addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_ACCESS, accessLevel);
 
                 setResult(Activity.RESULT_OK, addNewIntent);
                 finish();
             }
         });
 
-        spinnerAccessability = (Spinner) findViewById(R.id.activityAddNewSpinnerAccess);
+        spinnerAccessibility = (Spinner) findViewById(R.id.activityAddNewSpinnerAccess);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.accessibility, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAccessability.setAdapter(adapter);
-        spinnerAccessability.setOnItemSelectedListener(this);
+        spinnerAccessibility.setAdapter(adapter);
+        spinnerAccessibility.setOnItemSelectedListener(this);
     }
-
-    /*
-    public void btnScanClick(View v)
-    {
-    }
-    */
 
     private AlertDialog showDownloadDialog(final Activity ac, String title, String msg, String btnYes, String btnNo) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(ac);
@@ -122,32 +114,40 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         return dialog.show();
     }
 
-    /*
-    public void btnAddClick(View v)
-    {
-
-    }
-    */
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(requestCode == CallCodes.ACTION_SCAN)
+        if(requestCode == Utilities.ACTION_SCAN)
         {
             if(resultCode == Activity.RESULT_OK)
             {
-                addSecKey.setText(data.getStringExtra(CallCodes.SCAN_RESULT));
+                addSecKey.setText(data.getStringExtra(Utilities.SCAN_RESULT));
             }
         }
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+    {
+        String selectedItem = adapterView.getSelectedItem().toString();
 
-        Object obj = adapterView.getSelectedItem();
-        if(obj.toString().equals())
+        if(selectedItem.equals(res.getString(R.string.publicAccess)))
+        {
+            accessLevel = HotSpot.Accessibility.PUBLIC.name();
+        }
+        else if(selectedItem.equals(res.getString(R.string.loginAccess)))
+        {
+            accessLevel = HotSpot.Accessibility.LOGIN.name();
+        }
+        else if(selectedItem.equals(res.getString(R.string.secureAccess)))
+        {
+            accessLevel = HotSpot.Accessibility.SECURE.name();
+        }
+        else if(selectedItem.equals(res.getString(R.string.inaccessibleAccess)))
+        {
+            accessLevel = HotSpot.Accessibility.INACCESSIBLE.name();
+        }
     }
-
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {

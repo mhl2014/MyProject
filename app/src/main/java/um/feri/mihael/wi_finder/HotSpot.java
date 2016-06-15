@@ -12,6 +12,15 @@ public class HotSpot {
     private double latitude;
     private double longitude;
     private User user;
+
+    public Accessibility getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(Accessibility accessLevel) {
+        this.accessLevel = accessLevel;
+    }
+
     private Accessibility accessLevel;
 
     public HotSpot(/*int id, */String ssid, String securityKey, double latitude, double longitude, User user, Accessibility accessLevel)
@@ -89,5 +98,6 @@ public class HotSpot {
     public void setIdentifier(int identifier) {
         this.identifier = identifier;
     }*/
+
 
 }

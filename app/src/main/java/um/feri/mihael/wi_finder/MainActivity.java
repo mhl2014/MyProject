@@ -1,7 +1,11 @@
 package um.feri.mihael.wi_finder;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,17 +44,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         setContentView(R.layout.activity_main);
 
-        //DataAll all = DataAll.getScenarij1Data(); //testni podatki
-
-        //TextView testText = (TextView) findViewById(R.id.TestText);
-        //testText.setText(all.toString());
-
-        //ApplicationMy app = (ApplicationMy) getApplication();
-
         listAllButton = (Button)findViewById(R.id.buttonListAll);
         listAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent openListAll = new Intent(MainActivity.this, ListAllActivity.class);
                 startActivity(openListAll);
             }
@@ -61,12 +59,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             @Override
             public void onClick(View view)
             {
-                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
-                startActivityForResult(signInIntent, CallCodes.REQ_SIGN_IN);
+                /*
+                * Pri prijavi sprva preverimo, ce imamo spletno povezano, ce jo imamo izvedemo login, drugace uporabnika
+                * obvestimo, da mora vzpostaviti povezavo s spletom!
+                */
+
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+                if(networkInfo != null && networkInfo.isConnectedOrConnecting())
+                {
+                    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
+                    startActivityForResult(signInIntent, Utilities.REQ_SIGN_IN);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), res.getString(R.string.connectionRequired), Toast.LENGTH_LONG).show();
+                }
             }
         });
-
-        //appContext = new ApplicationMy(all, getApplication());
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -78,30 +89,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .build();
 
     }
-/*
-    public void btnListAllClick(View v)
-    {
-
-    }
-*/
-   // public void btnSignInUser(View v)
-   // {
-   //
-   // }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CallCodes.REQ_SIGN_IN)
+        if(requestCode == Utilities.REQ_SIGN_IN)
         {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
 
             if(result.isSuccess())
             {
                 accountInfo = result.getSignInAccount();
-                //((TextView)findViewById(R.id.TestText)).setText(accountInfo.getDisplayName().toString());
-
                 notifyToastText = res.getString(R.string.welcome) + accountInfo.getDisplayName() + " !";
             }
             else

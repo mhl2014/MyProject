@@ -15,12 +15,22 @@
     <string name="zxingUri">com.google.zxing.client.android</string>
     <string name="zxingNotFound">Zxing not found</string>
     <string name="zxingDownload">Download Zxing now?</string>
+    <string name="connectionRequired">You must have an internet connection to log in!</string>
+
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+    <string name="publicAccess">Open network</string>
+    <string name="secureAccess">Password required</string>
+    <string name="loginAccess">Login required</string>
+    <string name="inaccessibleAccess">Publicly inaccessible</string>
+
+    <string name="internalError">Internal Error</string>
+
     <string-array name="accessibility">
-        <item name="public">Open network</item>
-        <item name="secure">Password required</item>
-        <item name="login">Login required</item>
-        <item name="inaccessible">Publicly inaccessible</item>
+        <item>@string/publicAccess</item>
+        <item>@string/secureAccess</item>
+        <item>@string/loginAccess</item>
+        <item>@string/inaccessibleAccess</item>
     </string-array>
 </resources>

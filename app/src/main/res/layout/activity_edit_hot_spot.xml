@@ -24,9 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hot Spot:"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:padding="6dp"/>
     </TableRow>
 
     <TableRow>
@@ -35,17 +33,15 @@
         android:layout_height="wrap_content"
         android:text="SSID:"
         android:id="@+id/textViewLabelSSID"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:padding="6dp"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editTextSSID"
         android:minWidth="250dip"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textViewLabelSSID" />
+        android:inputType="text"
+        android:padding="6dp"/>
 </TableRow>
 
     <TableRow>
@@ -54,20 +50,51 @@
             android:layout_height="wrap_content"
             android:text="Password:"
             android:id="@+id/textViewLabelSecKey"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:padding="6dp"/>
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editTextSecKey"
             android:minWidth="250dip"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/textViewLabelSSID" />
+            android:inputType="text"
+            android:padding="6dp"/>
     </TableRow>
 
     <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accessibility:"
+            android:id="@+id/textViewLabelAccessibility"
+            android:padding="6dp"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editHotSpot_AccessibilitySpinner"
+            android:minWidth="250dip"
+            android:inputType="text"
+            android:padding="6dp"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address:"
+            android:id="@+id/textViewLabelAddress"
+            android:padding="6dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewAddress"
+            android:padding="6dp"/>
+    </TableRow>
+
+    <TableRow>
+
         <Space
             android:layout_width="1dp"
             android:layout_height="30dp"/>
@@ -78,9 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Discoverer:"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:padding="6dp"/>
     </TableRow>
 
     <TableRow>
@@ -89,17 +114,14 @@
             android:layout_height="wrap_content"
             android:text="Name:"
             android:id="@+id/textViewLabelUserName"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:padding="6dp"/>
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editTextUserName"
             android:minWidth="250dip"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/textViewLabelSSID" />
+            android:padding="6dp"/>
     </TableRow>
 
     <TableRow>
@@ -108,17 +130,14 @@
             android:layout_height="wrap_content"
             android:text="Email:"
             android:id="@+id/textViewLabelUserEmail"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:padding="6dp"/>
 
-        <EditText
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editTextUserEmail"
             android:minWidth="250dip"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/textViewLabelSSID" />
+            android:padding="6dp" />
     </TableRow>
 
 </TableLayout>
@@ -135,16 +154,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:id="@+id/buttonSave"
-            android:onClick="btnSaveClick" />
+            android:id="@+id/buttonSave" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete"
             android:id="@+id/buttonDelete"
-            android:layout_gravity="center_horizontal"
-            android:onClick="btnDeleteClick" />
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
-
 </RelativeLayout>
