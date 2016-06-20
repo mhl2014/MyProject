@@ -2,6 +2,7 @@ package um.feri.mihael.wi_finder;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataAll {
     private ArrayList<HotSpot> hotSpots;
@@ -72,6 +73,26 @@ public class DataAll {
         }
 
         return found;
+    }
+
+    public User getUserById(String id)
+    {
+        User user = null;
+
+        for(int i=0; i<users.size(); i++)
+        {
+            if(users.get(i).getId().equals(id))
+            {
+                user = users.get(i);
+            }
+        }
+
+        return user;
+    }
+
+    public List<User> getUsers()
+    {
+        return users;
     }
 
     public static DataAll getScenarij1Data() {

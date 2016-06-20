@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class ListAllActivity extends AppCompatActivity {
@@ -25,6 +27,7 @@ public class ListAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         res = getResources();
+        app = (ApplicationMy) getApplication();
 
         setContentView(R.layout.activity_list_all);
 
@@ -37,14 +40,16 @@ public class ListAllActivity extends AppCompatActivity {
             }
         });
 
+        if(!app.isUserLoggedIn())
+        {
+            addFab.setVisibility(View.GONE);
+        }
+
         recyclerView = (RecyclerView) findViewById(R.id.listAllView);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-        app = new ApplicationMy();
-        app.setApp(getApplication());
 
         String toastText;
         if(!app.loadData())
@@ -58,7 +63,7 @@ public class ListAllActivity extends AppCompatActivity {
             toastText = res.getString(R.string.loadSuccess);
         }
 
-        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
 
         adapter = new AdapterHotSpot(app.getAll(), this);
         recyclerView.setAdapter(adapter);
@@ -95,11 +100,25 @@ public class ListAllActivity extends AppCompatActivity {
             }
             else if(requestCode == Utilities.REQ_ADD_ITEM)
             {
+                User finder = app.getAll().getUserById(app.getSignInResult().getSignInAccount().getId());
+
+                HotSpot.Accessibility accessibility = (HotSpot.Accessibility.valueOf(extras.getString(Utilities.RETURN_HOTSPOT_ACCESS)));
+
+                if(accessibility == HotSpot.Accessibility.SECURE) {
+                    finder.addToPoints(Utilities.POINTS_FOR_SECURE);
+                }
+                else if(accessibility == HotSpot.Accessibility.PRIVATE) {
+                    finder.addToPoints(Utilities.POINTS_FOR_PRIVATE);
+                }
+                else {
+                    finder.addToPoints(Utilities.POINTS_FOR_OTHERWISE);
+                }
+
                 adapter.addItem(new HotSpot(extras.getString(Utilities.RETURN_HOTSPOT_SSID),
                         extras.getString(Utilities.RETURN_HOTSPOT_SEC_KEY),
                         extras.getDouble(Utilities.RETURN_HOTSPOT_LATITUDE),
-                        extras.getDouble(Utilities.RETURN_HOTSPOT_LONGITUDE), new User("testIme", "test@test.com"),
-                        HotSpot.Accessibility.valueOf(extras.getString(Utilities.RETURN_HOTSPOT_ACCESS))));
+                        extras.getDouble(Utilities.RETURN_HOTSPOT_LONGITUDE), finder, accessibility
+                        ));
             }
         }
     }
@@ -119,6 +138,6 @@ public class ListAllActivity extends AppCompatActivity {
             toastText = res.getString(R.string.saveSuccess);
         }
 
-        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
     }
 }

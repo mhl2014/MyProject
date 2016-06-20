@@ -24,13 +24,18 @@
     <string name="secureAccess">Password required</string>
     <string name="loginAccess">Login required</string>
     <string name="inaccessibleAccess">Publicly inaccessible</string>
+    <string name="privateAccess">Private network</string>
 
-    <string name="internalError">Internal Error</string>
+    <string name="internalError">Internal Error Occurred</string>
+
+    <string name="ssid">SSID</string>
+    <string name="password">Password</string>
 
     <string-array name="accessibility">
         <item>@string/publicAccess</item>
         <item>@string/secureAccess</item>
         <item>@string/loginAccess</item>
         <item>@string/inaccessibleAccess</item>
+        <item>@string/privateAccess</item>
     </string-array>
 </resources>

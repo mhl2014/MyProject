@@ -20,8 +20,30 @@ public class User {
         this.name = name;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public void addToPoints(int extraPoints)
+    {
+        this.points += extraPoints;
+    }
+
     private String name;
     private String email;
+    private String id;
     private int points;
 
     public User(String name, String email)
@@ -29,13 +51,14 @@ public class User {
         this.name = name;
         this.email = email;
         this.points = 0;
+        this.id = "";
     }
 
-    public User(String name, String email, int points)
+    public User(String name, String email, String id)
     {
         this.name = name;
         this.email = email;
-        this.points = points;
+        this.id = id;
     }
 
     @Override
@@ -44,6 +67,7 @@ public class User {
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", points='" + points +'\'' +
+                ", id='" + id +'\'' +
                 '}';
     }
 }

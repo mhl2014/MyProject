@@ -27,16 +27,14 @@
         android:layout_gravity="center_vertical"
         android:text="dummy security key"
         />
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_arrow_forward_white_24dp"
+        android:id="@+id/buttonShowOnMap"
+        android:layout_gravity="center_vertical" />
+
 </LinearLayout>
-
-
-    <!--
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="show on map"
-            android:id="@+id/buttonShowOnMap"
-            android:layout_gravity="center_vertical" />
-
-        Popravi design!!!-->
-    <!--Nadaljuj po tutorialu: https://www.youtube.com/watch?v=mGTRNp6FbU4 (1:30 in the video)-->

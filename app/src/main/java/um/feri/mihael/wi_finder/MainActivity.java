@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //TODO SYNC DATA HERE
         res = getResources();
+        appContext = (ApplicationMy) getApplication();
 
         setContentView(R.layout.activity_main);
 
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestId()
                 .build();
 
         apiClient = new GoogleApiClient.Builder(this)
@@ -90,18 +93,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     }
 
+    // Preverimo rezultat vpisa uporabnika
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == Utilities.REQ_SIGN_IN)
         {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            appContext.setSignInResult(Auth.GoogleSignInApi.getSignInResultFromIntent(data));
 
-            if(result.isSuccess())
+            // Ce je bil uporabnik uspesno vpisan preverimo, če ze obstaja v nasi bazi, v primeru, da ne, ga dodamo
+            if(appContext.getSignInResult().isSuccess())
             {
-                accountInfo = result.getSignInAccount();
-                notifyToastText = res.getString(R.string.welcome) + accountInfo.getDisplayName() + " !";
+                accountInfo = appContext.getSignInResult().getSignInAccount();
+                notifyToastText = res.getString(R.string.welcome) + " " + accountInfo.getDisplayName() + " !";
+
+                appContext.loadData();
+                if(appContext.getAll().getUserById(accountInfo.getId()) == null)
+                {
+                   appContext.getAll()
+                           .addUser(new User(accountInfo.getDisplayName(), accountInfo.getEmail(), accountInfo.getId()));
+                }
+
+                appContext.saveData();
             }
             else
             {

@@ -3,8 +3,10 @@ package um.feri.mihael.wi_finder;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,10 +44,13 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
 
     private Geocoder geocoder;
 
+    private ApplicationMy app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        app = (ApplicationMy) getApplication();
         res = getResources();
 
         setContentView(R.layout.activity_edit_hot_spot);
@@ -105,6 +110,51 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         spinnerAccessibility = (Spinner) findViewById(R.id.editHotSpot_AccessibilitySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.accessibility, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        boolean disableEditAndDelete = false;
+        if (!app.isUserLoggedIn())
+        {
+            disableEditAndDelete = true;
+        }
+        else if (!app.getSignInResult().getSignInAccount().getEmail().equals(textEmail.getText().toString()))
+        {
+            disableEditAndDelete = true;
+        }
+
+        if(disableEditAndDelete)
+        {
+            saveBtn.setVisibility(View.GONE);
+            deleteBtn.setVisibility(View.GONE);
+
+            spinnerAccessibility.setEnabled(false);
+            spinnerAccessibility.setClickable(false);
+
+            textSSID.setEnabled(false);
+            textSSID.setKeyListener(null);
+            textSSID.setCursorVisible(false);
+
+            textSecKey.setEnabled(false);
+            textSecKey.setKeyListener(null);
+            textSecKey.setCursorVisible(false);
+
+            /*
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                textSSID.setTextAppearance(android.R.style.TextAppearance_Widget_TextView);
+                textSecKey.setTextAppearance(android.R.style.TextAppearance_Widget_TextView);
+
+            }
+            else
+            {
+                textSSID.setTextAppearance(this, android.R.style.TextAppearance_Widget_TextView);
+                textSecKey.setTextAppearance(this, android.R.style.TextAppearance_Widget_TextView);
+            }
+            */
+
+            textSSID.setBackgroundColor(Color.TRANSPARENT);
+            textSecKey.setBackgroundColor(Color.TRANSPARENT);
+        }
+
         spinnerAccessibility.setAdapter(adapter);
 
         //set the initial accessibility as is
@@ -154,6 +204,10 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         else if(selectedItem.equals(res.getString(R.string.inaccessibleAccess)))
         {
             accessLevel = HotSpot.Accessibility.INACCESSIBLE.name();
+        }
+        else if(selectedItem.equals(res.getString(R.string.privateAccess)))
+        {
+            accessLevel = HotSpot.Accessibility.PRIVATE.name();
         }
     }
 

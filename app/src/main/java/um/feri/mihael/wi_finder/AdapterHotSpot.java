@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +30,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
         public TextView txtSSID;
         public TextView txtSecKey;
         public ImageView iv;
-       // public Button showOnMapButton;
+        public ImageButton showOnMapButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -37,7 +38,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
             txtSSID = (TextView) itemView.findViewById(R.id.listSSID);
             txtSecKey = (TextView) itemView.findViewById(R.id.listSecKey);
             iv = (ImageView) itemView.findViewById(R.id.listIcon);
-     //       showOnMapButton = (Button) itemView.findViewById(R.id.buttonShowOnMap);
+            showOnMapButton = (ImageButton) itemView.findViewById(R.id.buttonShowOnMap);
 
             itemView.setOnClickListener(this);
         }
@@ -75,22 +76,24 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
 
     @Override
     public void onBindViewHolder(AdapterHotSpot.ViewHolder holder, int position) {
-        HotSpot current = dataSet.getHotSpot(position);
+        final HotSpot current = dataSet.getHotSpot(position);
 
         holder.txtSSID.setText(current.getSsid());
         holder.txtSecKey.setText(current.getSecurityKey());
 
         holder.iv.setImageResource(R.drawable.wifi_signal_normal_temp);
-/*
+
         holder.showOnMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent viewMap = new Intent(ac, ViewLocationActivity.class);
-                ac.startActivity(viewMap);
+                Intent viewMapIntent = new Intent(ac, ViewLocationActivity.class);
+                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, current.getLatitude());
+                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, current.getLongitude());
+                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_SSID, current.getSsid());
+                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, current.getSecurityKey());
+                ac.startActivity(viewMapIntent);
             }
         });
-        */
-
     }
 
     @Override

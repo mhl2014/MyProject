@@ -11,6 +11,10 @@ public class Utilities {
     public static final int REQ_ADD_ITEM = 1;
     public static final int REQ_SIGN_IN = 9001;
 
+    public static final int POINTS_FOR_SECURE = 100;
+    public static final int POINTS_FOR_PRIVATE = 0;
+    public static final int POINTS_FOR_OTHERWISE = 50;
+
     public static final String REQ_SCAN = "com.google.zxing.client.android.SCAN";
 
     public static final String EXTRA_HOTSPOT_POS = "um.feri.mihael.wi_finfer.POS";

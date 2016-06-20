@@ -5,7 +5,7 @@ package um.feri.mihael.wi_finder;
  */
 public class HotSpot {
 
-    public enum Accessibility { PUBLIC, SECURE, LOGIN, INACCESSIBLE }
+    public enum Accessibility { PUBLIC, SECURE, LOGIN, INACCESSIBLE, PRIVATE }
     //private int identifier;
     private String ssid;
     private String securityKey;
@@ -47,8 +47,7 @@ public class HotSpot {
     }
 
     public boolean isSelected(String key) {
-        if (ssid == key) return true;
-        return false;
+        return ssid == key;
     }
 
     public String getSsid() {

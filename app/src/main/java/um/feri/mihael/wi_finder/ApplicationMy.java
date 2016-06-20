@@ -14,30 +14,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
  * Created by Mihael on 30. 05. 2016.
  */
-public class ApplicationMy{
-    private DataAll all;
-    private Application app;
+public class ApplicationMy extends Application{
+    private DataAll all = new DataAll();
+    private GoogleSignInResult result;
 
     private static final String DATA_DIR = "hotspotsmapa";
     private static final String DATA_FILE = "data.json";
 
-    public ApplicationMy()
-    {
-        this.app = new Application();
-        this.all = new DataAll();
-    }
-
-    public ApplicationMy(DataAll all, Application app)
-    {
-        this.all = all;
-        this.app = app;
-    }
 
     public DataAll getAll()
     {
@@ -47,14 +37,6 @@ public class ApplicationMy{
     public void setAll(DataAll all)
     {
         this.all = all;
-    }
-
-    public Application getApp() {
-        return app;
-    }
-
-    public void setApp(Application app) {
-        this.app = app;
     }
 
     public boolean loadData()
@@ -68,7 +50,6 @@ public class ApplicationMy{
         }
         else
         {
-            //all = DataAll.getScenarij1Data();
             return false;
         }
     }
@@ -84,7 +65,7 @@ public class ApplicationMy{
         {
             try
             {
-                File file = new File(app.getExternalFilesDir(DATA_DIR), "" + fileName);
+                File file = new File(this.getExternalFilesDir(DATA_DIR), "" + fileName);
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 PrintWriter printWriter = new PrintWriter(file);
 
@@ -112,28 +93,14 @@ public class ApplicationMy{
     {
         String state = Environment.getExternalStorageState();
 
-        if(Environment.MEDIA_MOUNTED.equals(state))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     private boolean isExternalStorageReadable()
     {
         String state = Environment.getExternalStorageState();
 
-        if(Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (Environment.MEDIA_MOUNTED.equals(state) || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state));
     }
 
     private DataAll loadData(String fileName)
@@ -142,7 +109,7 @@ public class ApplicationMy{
         {
             try
             {
-                File file = new File(app.getExternalFilesDir(DATA_DIR), "" + fileName);
+                File file = new File(this.getExternalFilesDir(DATA_DIR), "" + fileName);
                 FileInputStream fstream = new FileInputStream(file);
                 DataInputStream inStream = new DataInputStream(fstream);
                 BufferedReader buffReader = new BufferedReader(new InputStreamReader(inStream));
@@ -165,5 +132,30 @@ public class ApplicationMy{
             }
         }
         return null;
+    }
+
+    public GoogleSignInResult getSignInResult()
+    {
+        return result;
+    }
+
+    public boolean isUserLoggedIn()
+    {
+        if(result != null)
+        {
+            return result.isSuccess();
+        }
+
+        return false;
+    }
+
+    public boolean signInAvaliable()
+    {
+        return (result != null);
+    }
+
+    public void setSignInResult(GoogleSignInResult signInResult)
+    {
+        result = signInResult;
     }
 }

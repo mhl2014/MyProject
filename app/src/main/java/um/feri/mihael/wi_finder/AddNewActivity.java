@@ -147,6 +147,10 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         {
             accessLevel = HotSpot.Accessibility.INACCESSIBLE.name();
         }
+        else if(selectedItem.equals(res.getString(R.string.privateAccess)))
+        {
+            accessLevel = HotSpot.Accessibility.PRIVATE.name();
+        }
     }
 
     @Override
