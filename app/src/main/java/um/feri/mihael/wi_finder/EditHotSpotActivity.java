@@ -32,6 +32,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
 
     private Button saveBtn;
     private Button deleteBtn;
+    private Button changeLocationBtn;
 
     private Bundle extras;
 
@@ -104,6 +105,21 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
                 setResult(Activity.RESULT_OK, deleteIntent);
 
                 finish();
+            }
+        });
+
+        changeLocationBtn = (Button) findViewById(R.id.buttonEditLocation);
+        changeLocationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*
+                Intent changeLocationIntent = new Intent(EditHotSpotActivity.this, );
+
+                changeLocationIntent.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, posLongitude);
+                changeLocationIntent.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, posLatitude);
+
+                startActivityForResult(changeLocationIntent, Utilities.REQ_LOCATION_CHANGE);
+                */
             }
         });
 
@@ -252,4 +268,6 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
 
         return ind;
     }
+
+
 }

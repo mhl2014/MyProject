@@ -20,14 +20,6 @@
     android:id="@+id/tableLayout">
 
     <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hot Spot:"
-            android:padding="6dp"/>
-    </TableRow>
-
-    <TableRow>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Password:"
+            android:text="Geslo:"
             android:id="@+id/textViewLabelSecKey"
             android:padding="6dp"/>
 
@@ -65,7 +57,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Accessibility:"
+            android:text="Dostopnost:"
             android:id="@+id/textViewLabelAccessibility"
             android:padding="6dp"/>
 
@@ -74,15 +66,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/editHotSpot_AccessibilitySpinner"
             android:minWidth="250dip"
-            android:inputType="text"
-            android:padding="6dp"/>
+            android:inputType="text"/>
     </TableRow>
 
     <TableRow>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Address:"
+            android:text="Naslov:"
             android:id="@+id/textViewLabelAddress"
             android:padding="6dp"/>
 
@@ -97,22 +88,14 @@
 
         <Space
             android:layout_width="1dp"
-            android:layout_height="30dp"/>
+            android:layout_height="10dp"/>
     </TableRow>
 
     <TableRow>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Discoverer:"
-            android:padding="6dp"/>
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name:"
+            android:text="Ime:"
             android:id="@+id/textViewLabelUserName"
             android:padding="6dp"/>
 
@@ -128,7 +111,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email:"
+            android:text="E-pošta:"
             android:id="@+id/textViewLabelUserEmail"
             android:padding="6dp"/>
 
@@ -153,14 +136,21 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="Shrani"
             android:id="@+id/buttonSave" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="Izbriši"
             android:id="@+id/buttonDelete"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spremeni lokacijo"
+            android:id="@+id/buttonEditLocation"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 </RelativeLayout>

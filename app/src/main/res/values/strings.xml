@@ -1,40 +1,40 @@
 <resources>
     <string name="app_name">Wi-Finder</string>
-    <string name="title_activity_view_location">Map</string>
+    <string name="title_activity_view_location">Pogled na zemljevidu</string>
 
     <!--RESOURCE STRINGS-->
-    <string name="activityNotFound">No suitable activity found!</string>
-    <string name="loadSuccess">Successfully loaded from file!</string>
-    <string name="loadFailure">Could not load from file!</string>
-    <string name="saveSuccess">Successfully saved to file!</string>
-    <string name="saveFailure">Could not save to file!</string>
-    <string name="fileNotFound">File not found!</string>
-    <string name="loginFailure">Login failed</string>
-    <string name="welcome">Welcome</string>
+    <string name="activityNotFound">Ni bilo najdenega primernega Activitiya</string>
+    <string name="loadSuccess">Uspešno preneseno z datoteke</string>
+    <string name="loadFailure">Neuspeh pri prenosu z datoteke</string>
+    <string name="saveSuccess">Uspešno shranjeno na datoteko</string>
+    <string name="saveFailure">Neuspeh pri shranjevanju na datoteko</string>
+    <string name="fileNotFound">Datoteka ni bila najdena!</string>
+    <string name="loginFailure">Vpis neuspešen</string>
+    <string name="welcome">Dobrodošli</string>
     <string name="marketUri">market://search?q=pname:</string>
     <string name="zxingUri">com.google.zxing.client.android</string>
-    <string name="zxingNotFound">Zxing not found</string>
-    <string name="zxingDownload">Download Zxing now?</string>
-    <string name="connectionRequired">You must have an internet connection to log in!</string>
-    <string name="gpsRequired">This action requires your location</string>
-    <string name="enableGps">Would you like to enable GPS now?</string>
-    <string name="gpsSignalNotAcquired">Gps signal is not avaliable (yet)</string>
+    <string name="zxingNotFound">Zxing ni bil najden</string>
+    <string name="zxingDownload">Prenesite Xzing zdaj?</string>
+    <string name="connectionRequired">Za vpis potrebujete spletno povezavo</string>
+    <string name="gpsRequired">To dejanje potrebuje vašo lokacijo</string>
+    <string name="enableGps">Ali želite omogočiti GPS?</string>
+    <string name="gpsSignalNotAcquired">GPS signal ni na voljo (zaenkrat)</string>
 
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="yes">Da</string>
+    <string name="no">Ne</string>
 
-    <string name="publicAccess">Open network</string>
-    <string name="secureAccess">Password required</string>
-    <string name="loginAccess">Login required</string>
-    <string name="inaccessibleAccess">Publicly inaccessible</string>
-    <string name="privateAccess">Private network</string>
+    <string name="publicAccess">Odprto omrežje</string>
+    <string name="secureAccess">Potrebno geslo</string>
+    <string name="loginAccess">Potreben vpis</string>
+    <string name="inaccessibleAccess">Javno nedostopno</string>
+    <string name="privateAccess">Zasebno omrežje</string>
 
-    <string name="internalError">Internal Error Occurred</string>
+    <string name="internalError">Notranja napaka</string>
 
     <string name="ssid">SSID</string>
-    <string name="password">Password</string>
-    <string name="noPassWordRequired">No password required</string>
-    <string name="passwordInaccessible">Not accessible</string>
+    <string name="password">Geslo</string>
+    <string name="noPassWordRequired">Geslo ni potrebno</string>
+    <string name="passwordInaccessible">Ni dostopno</string>
 
     <string-array name="accessibility">
         <item>@string/publicAccess</item>
