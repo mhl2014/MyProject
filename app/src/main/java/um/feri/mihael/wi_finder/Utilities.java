@@ -28,6 +28,7 @@ public class Utilities {
     public static final String EXTRA_HOTSPOT_SEC_KEY = "um.feri.mihael.wi_finder.SECKEY";
     public static final String EXTRA_USER_NAME = "um.feri.mihael.wi_finder.USERNAME";
     public static final String EXTRA_USER_EMAIL = "um.feri.mihael.wi_finder.EMAIL";
+    public static final String INTENT_LOCATION_CHANGE = "um.feri.mihael.wi_finder.LOCATIONCHANGE";
 
     public static final int ACTION_SAVE = 0;
     public static final int ACTION_DELETE = 1;

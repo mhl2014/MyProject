@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -112,14 +113,15 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         changeLocationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Intent changeLocationIntent = new Intent(EditHotSpotActivity.this, );
-
+                Intent changeLocationIntent = new Intent(EditHotSpotActivity.this, ViewLocationActivity.class);
                 changeLocationIntent.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, posLongitude);
                 changeLocationIntent.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, posLatitude);
+                changeLocationIntent.putExtra(Utilities.EXTRA_HOTSPOT_SSID, textSSID.getText().toString());
+                changeLocationIntent.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, textSecKey.getText().toString());
+                changeLocationIntent.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, accessLevel);
+                changeLocationIntent.putExtra(Utilities.INTENT_LOCATION_CHANGE, true);
 
                 startActivityForResult(changeLocationIntent, Utilities.REQ_LOCATION_CHANGE);
-                */
             }
         });
 
@@ -141,6 +143,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         {
             saveBtn.setVisibility(View.GONE);
             deleteBtn.setVisibility(View.GONE);
+            changeLocationBtn.setVisibility(View.GONE);
 
             spinnerAccessibility.setEnabled(false);
             spinnerAccessibility.setClickable(false);
@@ -267,6 +270,19 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         }
 
         return ind;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK)
+        {
+            if(requestCode == Utilities.REQ_LOCATION_CHANGE)
+            {
+                Bundle extras = data.getExtras();
+                posLongitude = extras.getDouble(Utilities.RETURN_HOTSPOT_LONGITUDE);
+                posLatitude = extras.getDouble(Utilities.RETURN_HOTSPOT_LATITUDE);
+            }
+        }
     }
 
 

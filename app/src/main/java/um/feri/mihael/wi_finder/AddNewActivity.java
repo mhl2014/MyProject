@@ -127,15 +127,16 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
                     });
 
                     dialog.show();
-                } else {
-                    if (ContextCompat.checkSelfPermission(AddNewActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                }
+
+                if (ContextCompat.checkSelfPermission(AddNewActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
                             PackageManager.PERMISSION_GRANTED && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        ActivityCompat.requestPermissions(AddNewActivity.this,
-                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                Utilities.PERMISSION_ACCESS_FINE_LOCATION);
-                    } else if (getLocationFromGps()) {
-                        returnNewHotSpot();
-                    }
+                    ActivityCompat.requestPermissions(AddNewActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            Utilities.PERMISSION_ACCESS_FINE_LOCATION);
+                }
+                else if (getLocationFromGps())
+                {
+                    returnNewHotSpot();
                 }
             }
         });
@@ -170,6 +171,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
     private boolean getLocationFromGps() {
 
         boolean gotCoordinates = false;
+
         try
         {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);

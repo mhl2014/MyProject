@@ -8,11 +8,11 @@
     tools:context="um.feri.mihael.wi_finder.ViewLocationActivity">
 
     <Button
+        android:id="@+id/buttonEditLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
+        android:text="Save"
         android:padding="10dp"
-        android:text="Demo Button"
         android:layout_marginTop="20dp"
-        android:paddingRight="10dp"/>
+        android:gravity="start|top"/>
 </fragment>

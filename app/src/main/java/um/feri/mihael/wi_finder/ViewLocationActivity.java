@@ -1,11 +1,14 @@
 package um.feri.mihael.wi_finder;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.SignInButton;
@@ -27,6 +30,14 @@ public class ViewLocationActivity extends FragmentActivity implements OnMapReady
     private Bundle extras;
     private Resources res;
     private final int initialZoom = 15;
+    private Button saveBtn;
+    private ApplicationMy app;
+
+    private String password;
+    float markerColor;
+    boolean markerDraggable = false;
+
+    private Marker marker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,58 +50,86 @@ public class ViewLocationActivity extends FragmentActivity implements OnMapReady
 
         extras = getIntent().getExtras();
         res = getResources();
+        app = (ApplicationMy) getApplication();
+
+        saveBtn = (Button) findViewById(R.id.buttonEditLocation);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editLocationIntent = new Intent();
+                editLocationIntent.putExtra(Utilities.RETURN_HOTSPOT_LONGITUDE, marker.getPosition().longitude);
+                editLocationIntent.putExtra(Utilities.RETURN_HOTSPOT_LATITUDE, marker.getPosition().latitude);
+                setResult(Activity.RESULT_OK, editLocationIntent);
+
+                finish();
+            }
+        });
+
+        if(extras != null) {
+            HotSpot.Accessibility accessibility = HotSpot.Accessibility.valueOf(extras.getString(Utilities.EXTRA_HOTSPOT_ACCESS));
+
+            password = res.getString(R.string.password) + ": " + extras.getString(Utilities.EXTRA_HOTSPOT_SEC_KEY);
+
+            if (extras.containsKey(Utilities.INTENT_LOCATION_CHANGE)) {
+                markerDraggable = extras.getBoolean(Utilities.INTENT_LOCATION_CHANGE);
+            }
+            else
+            {
+                saveBtn.setVisibility(View.GONE);
+            }
+
+            if (accessibility == HotSpot.Accessibility.PRIVATE) {
+                markerColor = BitmapDescriptorFactory.HUE_BLUE;
+            } else if (accessibility == HotSpot.Accessibility.PUBLIC) {
+                markerColor = BitmapDescriptorFactory.HUE_GREEN;
+                password = res.getString(R.string.noPassWordRequired);
+            } else if (accessibility == HotSpot.Accessibility.SECURE) {
+                markerColor = BitmapDescriptorFactory.HUE_YELLOW;
+            } else {
+                markerColor = BitmapDescriptorFactory.HUE_RED;
+                password = res.getString(R.string.passwordInaccessible);
+            }
+        }
+        else
+        {
+            Toast.makeText(this, res.getString(R.string.internalError), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if(extras != null)
-        {
-            HotSpot.Accessibility accessibility = HotSpot.Accessibility.valueOf(extras.getString(Utilities.EXTRA_HOTSPOT_ACCESS));
+        LatLng hotSpotPos = new LatLng(
+                extras.getDouble(Utilities.EXTRA_HOTSPOT_LATITUDE), extras.getDouble(Utilities.EXTRA_HOTSPOT_LONGITUDE));
 
-            float markerColor;
-            String password = res.getString(R.string.password) + ": " + extras.getString(Utilities.EXTRA_HOTSPOT_SEC_KEY);
+        marker = mMap.addMarker(new MarkerOptions().position(hotSpotPos)
+                .title(res.getString(R.string.ssid) + ": " + extras.getString(Utilities.EXTRA_HOTSPOT_SSID)));
 
-            if(accessibility == HotSpot.Accessibility.PRIVATE)
-            {
-                markerColor = BitmapDescriptorFactory.HUE_BLUE;
-            }
-            else if(accessibility == HotSpot.Accessibility.PUBLIC)
-            {
-                markerColor = BitmapDescriptorFactory.HUE_GREEN;
-                password = res.getString(R.string.noPassWordRequired);
-            }
-            else if(accessibility == HotSpot.Accessibility.SECURE)
-            {
-                markerColor = BitmapDescriptorFactory.HUE_YELLOW;
-            }
-            else
-            {
-                markerColor = BitmapDescriptorFactory.HUE_RED;
-                password = res.getString(R.string.passwordInaccessible);
+        marker.setDraggable(markerDraggable);
+        marker.setIcon(BitmapDescriptorFactory.defaultMarker(markerColor));
+        marker.setSnippet(password);
+        marker.showInfoWindow();
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(hotSpotPos)
+                .zoom(initialZoom)
+                .build();
+
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
             }
 
-            LatLng hotSpotPos = new LatLng(
-                    extras.getDouble(Utilities.EXTRA_HOTSPOT_LATITUDE), extras.getDouble(Utilities.EXTRA_HOTSPOT_LONGITUDE));
+            @Override
+            public void onMarkerDrag(Marker marker) {
+            }
 
-            Marker marker = mMap.addMarker(new MarkerOptions().position(hotSpotPos)
-                    .title(res.getString(R.string.ssid) + ": " + extras.getString(Utilities.EXTRA_HOTSPOT_SSID)));
-
-            marker.setIcon(BitmapDescriptorFactory.defaultMarker(markerColor));
-            marker.setSnippet(password);
-            marker.showInfoWindow();
-
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(hotSpotPos)
-                    .zoom(initialZoom)
-                    .build();
-
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        }
-        else
-        {
-            Toast.makeText(this, res.getString(R.string.internalError), Toast.LENGTH_SHORT).show();
-        }
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+            }
+        });
     }
 }

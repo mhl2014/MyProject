@@ -97,6 +97,7 @@ public class DataAll {
 
     public static DataAll getScenarij1Data() {
         DataAll all = new DataAll();
+        all.addUser(new User ("Mihael Kvar", "mihael.kvar@gmail.com"));
         all.addUser(new User("Matej Črepinšek", "matej@najdi.si"));
         all.addUser(new User("Maja Kos", "maja.kos@najdi.si"));
         all.addUser(new User("Aleš Stroka", "as123@najdi.uk.si"));
