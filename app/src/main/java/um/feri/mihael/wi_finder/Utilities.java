@@ -15,6 +15,8 @@ public class Utilities {
     public static final int POINTS_FOR_PRIVATE = 0;
     public static final int POINTS_FOR_OTHERWISE = 50;
 
+    public static final int PERMISSION_ACCESS_FINE_LOCATION = 4;
+
     public static final String REQ_SCAN = "com.google.zxing.client.android.SCAN";
 
     public static final String EXTRA_HOTSPOT_POS = "um.feri.mihael.wi_finfer.POS";

@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorLightGreen">#6BEE6B</color>
+    <color name="publiclyAccessible">#49E20E</color>
+    <color name="publiclyInaccessible">#C80815</color>
+    <color name="secureAccess">#FDFF00</color>
+    <color name="privateAccess">#FFFFFF</color>
 </resources>

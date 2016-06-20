@@ -91,6 +91,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
                 viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, current.getLongitude());
                 viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_SSID, current.getSsid());
                 viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, current.getSecurityKey());
+                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, current.getAccessLevel().name());
                 ac.startActivity(viewMapIntent);
             }
         });

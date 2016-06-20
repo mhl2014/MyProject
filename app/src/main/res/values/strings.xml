@@ -16,6 +16,9 @@
     <string name="zxingNotFound">Zxing not found</string>
     <string name="zxingDownload">Download Zxing now?</string>
     <string name="connectionRequired">You must have an internet connection to log in!</string>
+    <string name="gpsRequired">This action requires your location</string>
+    <string name="enableGps">Would you like to enable GPS now?</string>
+    <string name="gpsSignalNotAcquired">Gps signal is not avaliable (yet)</string>
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -30,6 +33,8 @@
 
     <string name="ssid">SSID</string>
     <string name="password">Password</string>
+    <string name="noPassWordRequired">No password required</string>
+    <string name="passwordInaccessible">Not accessible</string>
 
     <string-array name="accessibility">
         <item>@string/publicAccess</item>
