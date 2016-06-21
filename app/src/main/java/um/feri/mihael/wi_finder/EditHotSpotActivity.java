@@ -43,6 +43,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
     private double posLatitude;
     private double posLongitude;
     private String accessLevel;
+    private String userID;
 
     private Geocoder geocoder;
 
@@ -66,6 +67,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
 
         if(extras != null)
         {
+            userID = extras.getString(Utilities.EXTRA_USER_ID);
             position = extras.getInt(Utilities.EXTRA_HOTSPOT_POS);
             accessLevel = extras.getString(Utilities.EXTRA_HOTSPOT_ACCESS);
             posLatitude = extras.getDouble(Utilities.EXTRA_HOTSPOT_LATITUDE);
@@ -74,6 +76,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
             textSecKey.setText(extras.getString(Utilities.EXTRA_HOTSPOT_SEC_KEY));
             textUserName.setText(extras.getString(Utilities.EXTRA_USER_NAME));
             textEmail.setText(extras.getString(Utilities.EXTRA_USER_EMAIL));
+
         }
 
         saveBtn = (Button) findViewById(R.id.buttonSave);
@@ -134,7 +137,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         {
             disableEditAndDelete = true;
         }
-        else if (!app.getSignInResult().getSignInAccount().getEmail().equals(textEmail.getText().toString()))
+        else if (!app.getSignInResult().getSignInAccount().getId().equals(userID))
         {
             disableEditAndDelete = true;
         }

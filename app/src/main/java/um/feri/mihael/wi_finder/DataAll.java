@@ -18,6 +18,7 @@ public class DataAll {
     {
         return hotSpots.size();
     }
+    public int userSize(){ return users.size(); }
 
     public void addUser(User u){
         users.add(u);
@@ -33,9 +34,11 @@ public class DataAll {
                 ", hotSpots=" + hotSpots +
                 '}';
     }
+
     public HotSpot getHotSpot(int i) {
         return hotSpots.get(i);
     }
+    public User getUser(int i) { return users.get(i); }
 
     public HotSpot getHostSpotBySSID(String ssid){
 
@@ -97,12 +100,12 @@ public class DataAll {
 
     public static DataAll getScenarij1Data() {
         DataAll all = new DataAll();
-        all.addUser(new User ("Mihael Kvar", "mihael.kvar@gmail.com"));
-        all.addUser(new User("Matej Črepinšek", "matej@najdi.si"));
-        all.addUser(new User("Maja Kos", "maja.kos@najdi.si"));
-        all.addUser(new User("Aleš Stroka", "as123@najdi.uk.si"));
-        all.addUser(new User("Janez Novak", "janez.novak@najdi.si"));
-        all.addUser(new User("Marjetka Kos Cerar", "nedela@naj12233 di.si"));
+        all.addUser(new User ("Mihael Kvar", "mihael.kvar@gmail.com", "0"));
+        all.addUser(new User("Matej Črepinšek", "matej@najdi.si", "1"));
+        all.addUser(new User("Maja Kos", "maja.kos@najdi.si", "2"));
+        all.addUser(new User("Aleš Stroka", "as123@najdi.uk.si", "3"));
+        all.addUser(new User("Janez Novak", "janez.novak@najdi.si", "4"));
+        all.addUser(new User("Marjetka Kos Cerar", "nedela@naj12233 di.si", "5"));
         all.addHotSpot(new HotSpot("154ea2", "MyPassword", 46.47817490000001, 15.715625300000056, all.users.get(0), HotSpot.Accessibility.SECURE));
         all.addHotSpot(new HotSpot("Stanovanje 7", "stanovanje 007", 46.47817360000003, 15.726625300000444, all.users.get(1), HotSpot.Accessibility.SECURE));
         all.addHotSpot(new HotSpot("Space Marines", "smGeneral", 46.3622743, 15.110658199999989, all.users.get(1), HotSpot.Accessibility.SECURE));

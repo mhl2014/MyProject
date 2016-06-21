@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private ApplicationMy appContext;
     private Button listAllButton;
+    private Button listAllUsers;
     private SignInButton signInUser;
 
     private GoogleApiClient apiClient;
@@ -46,13 +47,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         setContentView(R.layout.activity_main);
 
-        listAllButton = (Button)findViewById(R.id.buttonListAll);
+        listAllButton = (Button) findViewById(R.id.buttonListAll);
         listAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent openListAll = new Intent(MainActivity.this, ListAllActivity.class);
                 startActivity(openListAll);
+            }
+        });
+
+        listAllUsers = (Button) findViewById(R.id.buttonListUsers);
+        listAllUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent openListAllUsers = new Intent(MainActivity.this, ListAllUsersActivity.class);
+                startActivity(openListAllUsers);
             }
         });
 
@@ -84,13 +95,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestId()
+                .requestProfile()
                 .build();
 
         apiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
     }
 
     // Preverimo rezultat vpisa uporabnika
@@ -111,8 +122,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 appContext.loadData();
                 if(appContext.getAll().getUserById(accountInfo.getId()) == null)
                 {
-                   appContext.getAll()
-                           .addUser(new User(accountInfo.getDisplayName(), accountInfo.getEmail(), accountInfo.getId()));
+                    if(accountInfo.getPhotoUrl() != null) {
+                        appContext.getAll()
+                                .addUser(new User(accountInfo.getDisplayName(), accountInfo.getEmail(),
+                                        accountInfo.getId(), accountInfo.getPhotoUrl().toString()));
+                    }
+                    else
+                    {
+                        appContext.getAll()
+                                .addUser(new User(accountInfo.getDisplayName(), accountInfo.getEmail(),
+                                        accountInfo.getId()));
+                    }
                 }
 
                 appContext.saveData();

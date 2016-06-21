@@ -58,6 +58,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, hotSpot.getAccessLevel().name());
             interactActivity.putExtra(Utilities.EXTRA_USER_NAME, finder.getName());
             interactActivity.putExtra(Utilities.EXTRA_USER_EMAIL, finder.getEmail());
+            interactActivity.putExtra(Utilities.EXTRA_USER_ID, finder.getId());
 
             //ac.startActivity(interactActivity);
             ac.startActivityForResult(interactActivity, Utilities.REQ_EDIT_OR_DEL_ITEM);
