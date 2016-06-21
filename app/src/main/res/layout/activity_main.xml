@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="32sp"
-            android:text="WIFINDER"
+            android:text="@string/app_name"
             android:textStyle="bold"
             android:textColor="@color/colorPrimaryDark"
             android:gravity="center"
@@ -46,6 +46,12 @@
         android:layout_height="wrap_content"
         android:text="Prikaži vse uporabnike"
         android:id="@+id/buttonListUsers" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Prikaži vse bližnje točke"
+        android:id="@+id/buttonListNearby" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnSignInUser"

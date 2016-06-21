@@ -7,6 +7,10 @@ package um.feri.mihael.wi_finder;
 //TODO: REMOVE UNUSED CONSTS WHEN DONE
 public class Utilities {
 
+    public static final String SERVICE_CHECK_NETWORK = "um.feri.mihael.wi_finfer.CHECKNETWORKSERVICE";
+
+    public static final int NETWORK_SCAN_NOTIFICATION = 10;
+
     public static final int REQ_EDIT_OR_DEL_ITEM = 0;
     public static final int REQ_ADD_ITEM = 1;
     public static final int REQ_SIGN_IN = 9001;

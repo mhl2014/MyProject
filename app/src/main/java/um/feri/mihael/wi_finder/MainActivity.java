@@ -1,10 +1,13 @@
 package um.feri.mihael.wi_finder;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -44,6 +47,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         //TODO SYNC DATA HERE
         res = getResources();
         appContext = (ApplicationMy) getApplication();
+
+        BroadcastReceiver broadcastReceiver = new WiFiBroadcastReceiver(appContext);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        appContext.registerReceiver(broadcastReceiver, intentFilter);
+
+        WifiManager wifiManager = ((WifiManager) getSystemService(WIFI_SERVICE));
+        if(wifiManager.isWifiEnabled())
+        {
+            wifiManager.startScan();
+        }
 
         setContentView(R.layout.activity_main);
 
