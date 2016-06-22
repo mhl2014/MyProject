@@ -149,11 +149,6 @@ public class ApplicationMy extends Application{
         return false;
     }
 
-    public boolean signInAvaliable()
-    {
-        return (result != null);
-    }
-
     public void setSignInResult(GoogleSignInResult signInResult)
     {
         result = signInResult;

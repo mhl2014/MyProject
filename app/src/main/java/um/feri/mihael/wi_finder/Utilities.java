@@ -13,6 +13,7 @@ public class Utilities {
 
     public static final int REQ_EDIT_OR_DEL_ITEM = 0;
     public static final int REQ_ADD_ITEM = 1;
+    public static final int REQ_ADD_ITEMS_TO_SET = 2;
     public static final int REQ_SIGN_IN = 9001;
     public static final int REQ_LOCATION_CHANGE = 5;
 
@@ -53,6 +54,8 @@ public class Utilities {
     public static final String QR_CODE_MODE = "QR_CODE_MODE";
     public static final String SCAN_RESULT = "SCAN_RESULT";
     public static final String RETURN_HOTSPOT_ACCESS = "um.feri.mihael.wi_finder.RETN_ACCESS";
+
+
 
     /*
     public static final String ACCESS_PUBLIC = "HOTSPOT_PUBLIC";

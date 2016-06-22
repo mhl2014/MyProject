@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO SYNC DATA HERE
         res = getResources();
         appContext = (ApplicationMy) getApplication();
 

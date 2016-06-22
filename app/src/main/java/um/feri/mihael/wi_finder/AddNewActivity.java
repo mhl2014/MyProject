@@ -47,6 +47,9 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
     private Location currentLocation;
     private boolean gotCoordinates;
 
+    private int position;
+    private Bundle extras;
+
     ApplicationMy app;
 
     @Override
@@ -58,7 +61,11 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         gotCoordinates = false;
         currentLocation = null;
 
+        extras = getIntent().getExtras();
+
         setContentView(R.layout.activity_add_new);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         locationListener = new LocationListener() {
             @Override
@@ -105,8 +112,6 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             @Override
             public void onClick(View view) {
 
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
                 if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     final AlertDialog.Builder dialog = new AlertDialog.Builder(AddNewActivity.this);
                     dialog.setTitle(res.getString(R.string.gpsRequired));
@@ -146,10 +151,24 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerAccessibility.setAdapter(adapter);
         spinnerAccessibility.setOnItemSelectedListener(this);
+
+        if(extras != null)
+        {
+            position = extras.getInt(Utilities.EXTRA_HOTSPOT_POS);
+            addSSID.setText(extras.getString(Utilities.EXTRA_HOTSPOT_SSID));
+        }
+
+        if(ContextCompat.checkSelfPermission(AddNewActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+            if(!getLocationFromGps())
+            {
+                Toast.makeText(this, res.getString(R.string.gpsFailure), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void returnNewHotSpot() {
-
         if (currentLocation != null) {
             Intent addNewIntent = new Intent();
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_SSID, addSSID.getText().toString());
@@ -157,6 +176,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_ACCESS, accessLevel);
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_LATITUDE, currentLocation.getLatitude());
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_LONGITUDE, currentLocation.getLongitude());
+            addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_POS, position);
             setResult(Activity.RESULT_OK, addNewIntent);
 
             finish();
@@ -279,5 +299,4 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         }
 
     }
-
 }

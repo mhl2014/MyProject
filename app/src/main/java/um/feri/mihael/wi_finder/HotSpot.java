@@ -23,9 +23,8 @@ public class HotSpot {
 
     private Accessibility accessLevel;
 
-    public HotSpot(/*int id, */String ssid, String securityKey, double latitude, double longitude, User user, Accessibility accessLevel)
+    public HotSpot(String ssid, String securityKey, double latitude, double longitude, User user, Accessibility accessLevel)
     {
-        //this.identifier = id;
         this.ssid = ssid;
         this.securityKey = securityKey;
         this.latitude = latitude;
@@ -89,14 +88,4 @@ public class HotSpot {
     public void setUser(User user) {
         this.user = user;
     }
-/*
-    public int getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(int identifier) {
-        this.identifier = identifier;
-    }*/
-
-
 }

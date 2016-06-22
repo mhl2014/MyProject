@@ -43,9 +43,9 @@ public class DataAll {
     public HotSpot getHostSpotBySSID(String ssid){
 
         HotSpot found = null;
-        for(int i=0; i<hotSpots.size(); i++)
+        for(int i=0; i< hotSpots.size(); i++)
         {
-            if(hotSpots.get(i).getSsid() == ssid)
+            if(hotSpots.get(i).getSsid().equals(ssid))
             {
                 found = hotSpots.get(i);
             }

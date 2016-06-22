@@ -34,7 +34,6 @@
             android:id="@+id/titleScreenWiText"
             android:paddingBottom="10dp"/>
 
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,51 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent" android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/listIcon"
+        android:id="@+id/listNewIcon"
         android:layout_height="50dip"
         android:layout_width="50dip"
         android:padding="6dip"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/ic_signal_wifi_public_black_24dp"
+        android:src="@drawable/ic_wifi_black_48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         />
 
     <TextView
-        android:id="@+id/listSSID"
+        android:id="@+id/listNewSSID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:paddingTop="6dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center_vertical"
-        android:layout_toRightOf="@+id/listIcon"
-        android:layout_toEndOf="@+id/listIcon"
+        android:layout_toRightOf="@+id/listNewIcon"
+        android:layout_toEndOf="@+id/listNewIcon"
         />
-
-    <TextView
-        android:id="@+id/listAccessibility"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="6dip"
-        android:layout_gravity="center_vertical"
-        android:layout_below="@+id/listSSID"
-        android:layout_toRightOf="@+id/listIcon"
-        android:layout_toEndOf="@+id/listIcon"/>
 
     <ImageButton
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_arrow_forward_white_24dp"
-        android:id="@+id/buttonShowOnMap"
+        android:src="@drawable/plus_64"
+        android:id="@+id/buttonNewAdd"
         android:layout_gravity="center_vertical"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:padding="16dp"
         android:layout_margin="6dp"/>
+
 </RelativeLayout>

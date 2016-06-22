@@ -1,18 +1,15 @@
 package um.feri.mihael.wi_finder;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.media.RingtoneManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,28 +33,26 @@ public class WiFiBroadcastReceiver extends BroadcastReceiver {
         if(intentAction.equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
         {
             DataAll all = app.getAll();
+
             List<ScanResult> wifiNetworks = ((WifiManager) context.getSystemService(Context.WIFI_SERVICE)).getScanResults();
+            HashMap<String, ScanResult> uniqueNetworks = new HashMap<>();
 
             int newNetworks = 0;
-            int recognizedNetworks = 0;
-            for(int j=0; j<wifiNetworks.size(); j++) {
+            for(int j=0; j < wifiNetworks.size(); j++)
+            {
+                ScanResult current = wifiNetworks.get(j);
 
-                if (all.getHostSpotBySSID(wifiNetworks.get(j).SSID) == null)
+                if ((all.getHostSpotBySSID(current.SSID) == null) && (!uniqueNetworks.containsKey(current.SSID)))
                 {
                     newNetworks++;
-                }
-                else
-                {
-                    recognizedNetworks++;
+                    uniqueNetworks.put(current.SSID, current);
                 }
             }
 
-            if (newNetworks != 0 || recognizedNetworks != 0)
+            if (newNetworks != 0)
             {
-                //Toast.makeText(context, "found networks" +  newNetworks + " " + recognizedNetworks, Toast.LENGTH_SHORT).show();
-
                 String appTitle = res.getString(R.string.app_name);
-                String notificationAdditional = "Najdenih " + newNetworks + " novih in " + recognizedNetworks + " znanih omrežij!";
+                String notificationAdditional = "Najdenih " + newNetworks + " novih omrežij!";
 
                 NotificationCompat.Builder notification = new NotificationCompat.Builder(context);
                 notification.setSmallIcon(R.drawable.ic_perm_scan_wifi_white_24dp);
@@ -67,7 +62,6 @@ public class WiFiBroadcastReceiver extends BroadcastReceiver {
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(Utilities.NETWORK_SCAN_NOTIFICATION, notification.build());
             }
-
         }
     }
 }

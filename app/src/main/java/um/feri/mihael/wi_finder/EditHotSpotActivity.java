@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -180,7 +179,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         spinnerAccessibility.setAdapter(adapter);
 
         //set the initial accessibility as is
-        Toast.makeText(this, "slected item is " + accessLevel, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "slected item is " + accessLevel, Toast.LENGTH_LONG).show();
         spinnerAccessibility.setSelection(findItemPosByAccessibilityName(accessLevel));
         spinnerAccessibility.setOnItemSelectedListener(this);
 

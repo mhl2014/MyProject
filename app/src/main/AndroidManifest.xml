@@ -47,7 +47,8 @@
             android:name=".ViewLocationActivity"
             android:label="@string/title_activity_view_location" />
         <activity android:name=".AddNewActivity" />
-        <activity android:name=".ListAllUsersActivity"></activity>
+        <activity android:name=".ListAllUsersActivity" />
+        <activity android:name=".ListNewActivity"></activity>
     </application>
 
 </manifest>

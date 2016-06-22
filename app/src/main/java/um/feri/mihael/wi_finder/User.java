@@ -76,8 +76,6 @@ public class User {
         this.userPhotoUri = userPhotoUri;
     }
 
-
-
     @Override
     public String toString() {
         return "User{" +

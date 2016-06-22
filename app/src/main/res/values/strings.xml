@@ -18,6 +18,7 @@
     <string name="connectionRequired">Za vpis potrebujete spletno povezavo</string>
     <string name="gpsRequired">To dejanje potrebuje vašo lokacijo</string>
     <string name="enableGps">Ali želite omogočiti GPS?</string>
+    <string name="gpsFailure">Failed to acquire location using GPS</string>
     <string name="gpsSignalNotAcquired">GPS signal ni na voljo (zaenkrat)</string>
 
     <string name="yes">Da</string>
@@ -35,6 +36,8 @@
     <string name="password">Geslo</string>
     <string name="noPassWordRequired">Geslo ni potrebno</string>
     <string name="passwordInaccessible">Ni dostopno</string>
+
+    <string name="save">Shrani</string>
 
     <string-array name="accessibility">
         <item>@string/publicAccess</item>

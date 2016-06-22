@@ -28,7 +28,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         public TextView txtSSID;
-        public TextView txtSecKey;
+        public TextView txtAccessibility;
         public ImageView iv;
         public ImageButton showOnMapButton;
 
@@ -36,7 +36,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
             super(itemView);
 
             txtSSID = (TextView) itemView.findViewById(R.id.listSSID);
-            txtSecKey = (TextView) itemView.findViewById(R.id.listSecKey);
+            txtAccessibility = (TextView) itemView.findViewById(R.id.listAccessibility);
             iv = (ImageView) itemView.findViewById(R.id.listIcon);
             showOnMapButton = (ImageButton) itemView.findViewById(R.id.buttonShowOnMap);
 
@@ -52,7 +52,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
 
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_POS, getAdapterPosition());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_SSID, this.txtSSID.getText());
-            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, this.txtSecKey.getText());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, this.txtAccessibility.getText());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, hotSpot.getLatitude());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, hotSpot.getLongitude());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, hotSpot.getAccessLevel().name());
@@ -60,7 +60,6 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
             interactActivity.putExtra(Utilities.EXTRA_USER_EMAIL, finder.getEmail());
             interactActivity.putExtra(Utilities.EXTRA_USER_ID, finder.getId());
 
-            //ac.startActivity(interactActivity);
             ac.startActivityForResult(interactActivity, Utilities.REQ_EDIT_OR_DEL_ITEM);
         }
     }
@@ -80,9 +79,32 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
         final HotSpot current = dataSet.getHotSpot(position);
 
         holder.txtSSID.setText(current.getSsid());
-        holder.txtSecKey.setText(current.getSecurityKey());
 
-        holder.iv.setImageResource(R.drawable.wifi_signal_normal_temp);
+        if(current.getAccessLevel() == HotSpot.Accessibility.PUBLIC)
+        {
+            holder.iv.setImageResource(R.drawable.ic_signal_wifi_public_black_24dp);
+            holder.txtAccessibility.setText(R.string.publicAccess);
+        }
+        else if (current.getAccessLevel() == HotSpot.Accessibility.PRIVATE)
+        {
+            holder.iv.setImageResource(R.drawable.ic_signal_wifi_public_black_24dp);
+            holder.txtAccessibility.setText(R.string.privateAccess);
+        }
+        else if(current.getAccessLevel() == HotSpot.Accessibility.SECURE)
+        {
+            holder.iv.setImageResource(R.drawable.ic_wifi_secure_black_24dp);
+            holder.txtAccessibility.setText(R.string.secureAccess);
+        }
+        else if(current.getAccessLevel() == HotSpot.Accessibility.LOGIN)
+        {
+            holder.iv.setImageResource(R.drawable.ic_signal_wifi_inaccessible_black_24dp);
+            holder.txtAccessibility.setText(R.string.loginAccess);
+        }
+        else //if(current.getAccessLevel() == HotSpot.Accessibility.INACCESSIBLE)
+        {
+            holder.iv.setImageResource(R.drawable.ic_signal_wifi_inaccessible_black_24dp);
+            holder.txtAccessibility.setText(R.string.inaccessibleAccess);
+        }
 
         holder.showOnMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,5 +141,11 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
     {
         dataSet.addHotSpot(hs);
         notifyItemInserted(dataSet.hotSpotSize() - 1);
+    }
+
+    public void setDataSet(DataAll dataSet)
+    {
+        this.dataSet = dataSet;
+        notifyDataSetChanged();
     }
 }

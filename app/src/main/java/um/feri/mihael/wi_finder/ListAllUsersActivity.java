@@ -30,19 +30,10 @@ public class ListAllUsersActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        String toastText;
         if(!app.loadData())
         {
-            //Ce ne uspemo dobiti podatkov iz json datoteke nastavimo "dummy data"
-            app.setAll(DataAll.getScenarij1Data());
-            toastText = res.getString(R.string.loadFailure);
+            Toast.makeText(this, res.getString(R.string.loadFailure), Toast.LENGTH_SHORT).show();
         }
-        else
-        {
-            toastText = res.getString(R.string.loadSuccess);
-        }
-
-        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
 
         adapter = new AdapterUser(app.getAll(), this);
         recyclerView.setAdapter(adapter);

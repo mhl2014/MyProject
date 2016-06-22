@@ -7,23 +7,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="um.feri.mihael.wi_finder.ListAllActivity">
+    tools:context=".ListNewActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/listAllView"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:id="@+id/listNewRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addFab"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:id="@+id/listNewFab"
+        android:src="@drawable/ic_done_white_24dp"
         android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_search_white_24dp">
+        android:layout_alignParentEnd="true" />
 
-    </android.support.design.widget.FloatingActionButton>
 </RelativeLayout>
