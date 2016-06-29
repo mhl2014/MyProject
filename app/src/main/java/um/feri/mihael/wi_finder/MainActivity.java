@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleSignInOptions gso;
     private GoogleSignInAccount accountInfo;
 
-    //private Toast notifyToast;
-
     private String notifyToastText;
 
     private Resources res;

@@ -29,8 +29,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListAllActivity" />
-        <activity android:name=".EditHotSpotActivity" />
+
+        <activity android:name=".ListAllActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"
+                />
+        </activity>
+
+        <activity android:name=".EditHotSpotActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListAllActivity"
+                />
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,10 +57,33 @@
 
         <activity
             android:name=".ViewLocationActivity"
-            android:label="@string/title_activity_view_location" />
-        <activity android:name=".AddNewActivity" />
-        <activity android:name=".ListAllUsersActivity" />
-        <activity android:name=".ListNewActivity"></activity>
+            android:label="@string/title_activity_view_location" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListAllActivity"
+                />
+        </activity>
+
+        <activity android:name=".AddNewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListNewActivity"
+                />
+        </activity>
+
+        <activity android:name=".ListAllUsersActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"
+                />
+        </activity>
+
+        <activity android:name=".ListNewActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ListAllActivity"
+                />
+        </activity>
     </application>
 
 </manifest>

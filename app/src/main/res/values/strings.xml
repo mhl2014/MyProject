@@ -37,7 +37,11 @@
     <string name="noPassWordRequired">Geslo ni potrebno</string>
     <string name="passwordInaccessible">Ni dostopno</string>
 
+    <string name="loading">Nalagam&#8230;</string>
+    <string name="ReverseGeoCodingFailed">Nisem uspel najti naslova&#8230; :(</string>
+
     <string name="save">Shrani</string>
+    <string name="numOfPoints">Št. Točk:</string>
 
     <string-array name="accessibility">
         <item>@string/publicAccess</item>

@@ -6,8 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.Build;
-import android.preference.PreferenceManager;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 //// TODO: 8. 06. 2016 add onclick listeners for buttons and location view 
 public class EditHotSpotActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -43,8 +43,6 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
     private double posLongitude;
     private String accessLevel;
     private String userID;
-
-    private Geocoder geocoder;
 
     private ApplicationMy app;
 
@@ -158,51 +156,17 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
             textSecKey.setKeyListener(null);
             textSecKey.setCursorVisible(false);
 
-            /*
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            {
-                textSSID.setTextAppearance(android.R.style.TextAppearance_Widget_TextView);
-                textSecKey.setTextAppearance(android.R.style.TextAppearance_Widget_TextView);
-
-            }
-            else
-            {
-                textSSID.setTextAppearance(this, android.R.style.TextAppearance_Widget_TextView);
-                textSecKey.setTextAppearance(this, android.R.style.TextAppearance_Widget_TextView);
-            }
-            */
-
             textSSID.setBackgroundColor(Color.TRANSPARENT);
             textSecKey.setBackgroundColor(Color.TRANSPARENT);
         }
 
         spinnerAccessibility.setAdapter(adapter);
 
-        //set the initial accessibility as is
-        //Toast.makeText(this, "slected item is " + accessLevel, Toast.LENGTH_LONG).show();
+
         spinnerAccessibility.setSelection(findItemPosByAccessibilityName(accessLevel));
         spinnerAccessibility.setOnItemSelectedListener(this);
 
-        geocoder = new Geocoder(this);
-
-        try
-        {
-            List<Address> addresses = geocoder.getFromLocation(posLatitude, posLongitude, 1);
-            String addressString;
-
-            if(addresses.size() > 0) {
-                addressString = addresses.get(0).getCountryName() + " " + addresses.get(0).getLocality();
-            }
-            else
-            {
-                addressString = "No address found";
-            }
-
-            textAddress.setText(addressString);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        new AsyncReverseGeoCoder().execute();
     }
 
     @Override
@@ -287,5 +251,77 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         }
     }
 
+    public class AsyncReverseGeoCoder extends AsyncTask<Void, Void, Boolean>
+    {
+        private Geocoder geocoder = new Geocoder(EditHotSpotActivity.this, Locale.getDefault());
+        List<Address> addresses;
 
+        @Override
+        protected void onPreExecute()
+        {
+            textAddress.setText(res.getString(R.string.loading));
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try
+            {
+               addresses = geocoder.getFromLocation(posLatitude, posLongitude, 1);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result)
+        {
+            if(result)
+            {
+                String featureName = addresses.get(0).getFeatureName();
+                String country = addresses.get(0).getCountryName();
+                String subLocality = addresses.get(0).getSubLocality();
+                String city = addresses.get(0).getLocality();
+                String zip = addresses.get(0).getPostalCode();
+
+                String entireAddress = "";
+
+                if(country != null)
+                {
+                    entireAddress += country + " ";
+                }
+                if(city != null)
+                {
+                    entireAddress += city + " ";
+                }
+                if(zip != null)
+                {
+                    entireAddress += zip + " ";
+                }
+                if(subLocality != null)
+                {
+                    entireAddress += subLocality + " ";
+                }
+                if(featureName != null)
+                {
+                    entireAddress += featureName;
+                }
+
+                if(entireAddress.isEmpty())
+                {
+                    textAddress.setText(res.getString(R.string.ReverseGeoCodingFailed));
+                }
+
+                textAddress.setText(entireAddress);
+            }
+            else
+            {
+                textAddress.setText(res.getString(R.string.ReverseGeoCodingFailed));
+            }
+        }
+    }
 }

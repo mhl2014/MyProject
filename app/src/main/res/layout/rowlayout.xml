@@ -24,13 +24,14 @@
         android:layout_gravity="center_vertical"
         android:layout_toRightOf="@+id/listIcon"
         android:layout_toEndOf="@+id/listIcon"
+        android:textColor="@color/colorPrimaryDark"
         />
 
     <TextView
         android:id="@+id/listAccessibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="6dip"
+        android:paddingTop="2dp"
         android:layout_gravity="center_vertical"
         android:layout_below="@+id/listSSID"
         android:layout_toRightOf="@+id/listIcon"

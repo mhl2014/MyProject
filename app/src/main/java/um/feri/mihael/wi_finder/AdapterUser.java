@@ -23,10 +23,14 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.ViewHolder> {
     private DataAll dataSet;
     Activity ac;
 
+    private String numOfPoints;
+
     AdapterUser(DataAll dataSet, Activity ac)
     {
         this.dataSet = dataSet;
         this.ac = ac;
+
+        numOfPoints = ac.getResources().getString(R.string.numOfPoints);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -62,7 +66,9 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.ViewHolder> {
 
         holder.textUserName.setText(current.getName());
         holder.textUserEmail.setText(current.getEmail());
-        holder.textUserPoints.setText(String.valueOf(current.getPoints()));
+
+        String pointsString = numOfPoints + String.valueOf(current.getPoints());
+        holder.textUserPoints.setText(pointsString);
 
         if(current.getUserPhotoUri() == null || current.getUserPhotoUri().equals(""))
         {

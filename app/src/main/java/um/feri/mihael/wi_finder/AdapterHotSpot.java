@@ -2,6 +2,7 @@ package um.feri.mihael.wi_finder;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,37 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
     private DataAll dataSet;
     Activity ac;
 
+    private int publicWifiIcon;
+    private int privateWifiIcon;
+    private int secureWifiIcon;
+    private int loginWifiIcon;
+    private int inaccessibleWifiIcon;
+
+    private int publicAccessStringId;
+    private int privateAccessStringId;
+    private int secureAccessStringId;
+    private int loginAccessStringId;
+    private int inaccessibleAccessStringId;
+
+
     public AdapterHotSpot(DataAll dataSet, Activity ac)
     {
         this.dataSet = dataSet;
         this.ac = ac;
+
+        publicWifiIcon = R.drawable.ic_signal_wifi_public_black_24dp;
+        privateWifiIcon = publicWifiIcon;
+
+        secureWifiIcon = R.drawable.ic_wifi_secure_black_24dp;
+
+        inaccessibleWifiIcon = R.drawable.ic_signal_wifi_inaccessible_black_24dp;
+        loginWifiIcon = inaccessibleWifiIcon;
+
+        publicAccessStringId = R.string.publicAccess;
+        privateAccessStringId = R.string.privateAccess;
+        secureAccessStringId = R.string.secureAccess;
+        loginAccessStringId = R.string.loginAccess;
+        inaccessibleAccessStringId = R.string.inaccessibleAccess;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -82,28 +110,28 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
 
         if(current.getAccessLevel() == HotSpot.Accessibility.PUBLIC)
         {
-            holder.iv.setImageResource(R.drawable.ic_signal_wifi_public_black_24dp);
-            holder.txtAccessibility.setText(R.string.publicAccess);
+            holder.iv.setImageResource(publicWifiIcon);
+            holder.txtAccessibility.setText(publicAccessStringId);
         }
         else if (current.getAccessLevel() == HotSpot.Accessibility.PRIVATE)
         {
-            holder.iv.setImageResource(R.drawable.ic_signal_wifi_public_black_24dp);
-            holder.txtAccessibility.setText(R.string.privateAccess);
+            holder.iv.setImageResource(privateWifiIcon);
+            holder.txtAccessibility.setText(privateAccessStringId);
         }
         else if(current.getAccessLevel() == HotSpot.Accessibility.SECURE)
         {
-            holder.iv.setImageResource(R.drawable.ic_wifi_secure_black_24dp);
-            holder.txtAccessibility.setText(R.string.secureAccess);
+            holder.iv.setImageResource(secureWifiIcon);
+            holder.txtAccessibility.setText(secureAccessStringId);
         }
         else if(current.getAccessLevel() == HotSpot.Accessibility.LOGIN)
         {
-            holder.iv.setImageResource(R.drawable.ic_signal_wifi_inaccessible_black_24dp);
-            holder.txtAccessibility.setText(R.string.loginAccess);
+            holder.iv.setImageResource(loginWifiIcon);
+            holder.txtAccessibility.setText(loginAccessStringId);
         }
         else //if(current.getAccessLevel() == HotSpot.Accessibility.INACCESSIBLE)
         {
-            holder.iv.setImageResource(R.drawable.ic_signal_wifi_inaccessible_black_24dp);
-            holder.txtAccessibility.setText(R.string.inaccessibleAccess);
+            holder.iv.setImageResource(inaccessibleWifiIcon);
+            holder.txtAccessibility.setText(inaccessibleAccessStringId);
         }
 
         holder.showOnMapButton.setOnClickListener(new View.OnClickListener() {

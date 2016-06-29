@@ -32,7 +32,12 @@
             android:textColor="@color/colorPrimaryDark"
             android:gravity="center"
             android:id="@+id/titleScreenWiText"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btnSignInUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="match_parent"
@@ -45,15 +50,4 @@
         android:layout_height="wrap_content"
         android:text="Prikaži vse uporabnike"
         android:id="@+id/buttonListUsers" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Prikaži vse bližnje točke"
-        android:id="@+id/buttonListNearby" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btnSignInUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>
