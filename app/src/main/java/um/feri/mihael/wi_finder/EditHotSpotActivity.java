@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-//// TODO: 8. 06. 2016 add onclick listeners for buttons and location view 
 public class EditHotSpotActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private TextView textSSID;

@@ -4,7 +4,6 @@ package um.feri.mihael.wi_finder;
  * Created by Mihael on 6. 06. 2016.
  */
 
-//TODO: REMOVE UNUSED CONSTS WHEN DONE
 public class Utilities {
 
     public static final String SERVICE_CHECK_NETWORK = "um.feri.mihael.wi_finfer.CHECKNETWORKSERVICE";
