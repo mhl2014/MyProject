@@ -24,13 +24,31 @@
     <string name="yes">Da</string>
     <string name="no">Ne</string>
 
+    <string name="accessibilityString">Dostopnost</string>
     <string name="publicAccess">Odprto omrežje</string>
     <string name="secureAccess">Potrebno geslo</string>
     <string name="loginAccess">Potreben vpis</string>
     <string name="inaccessibleAccess">Javno nedostopno</string>
     <string name="privateAccess">Zasebno omrežje</string>
 
+    <!-- NE UPORABLJAJ TEH VREDNOSTI ZA VPIS V ARFF DATOTEKO -->
+    <string name="noAccessRating">Ni dostopa</string>
+    <string name="badRating">Slabo</string>
+    <string name="okRating">OK</string>
+    <string name="goodRating">Dobro</string>
+    <string name="greatRating">Odlično</string>
+
+    <!-- SE LAHKO UPORABLJAJO Z ARFF DATOTEKO -->
+    <string name="noAccessRatingARFF">no_access</string>
+    <string name="badRatingARFF">bad</string>
+    <string name="okRatingARFF">OK</string>
+    <string name="goodRatingARFF">good</string>
+    <string name="greatRatingARFF">great</string>
+
     <string name="internalError">Notranja napaka</string>
+
+    <string name="scan">Skeniraj</string>
+    <string name="add">Dodaj</string>
 
     <string name="ssid">SSID</string>
     <string name="password">Geslo</string>
@@ -43,11 +61,21 @@
     <string name="save">Shrani</string>
     <string name="numOfPoints">Št. Točk:</string>
 
+    <string name="rating">Ocena</string>
+
     <string-array name="accessibility">
         <item>@string/publicAccess</item>
         <item>@string/secureAccess</item>
         <item>@string/loginAccess</item>
         <item>@string/inaccessibleAccess</item>
         <item>@string/privateAccess</item>
+    </string-array>
+
+    <string-array name="ratingsArray">
+        <item>@string/noAccessRating</item>
+        <item>@string/badRating</item>
+        <item>@string/okRating</item>
+        <item>@string/goodRating</item>
+        <item>@string/greatRating</item>
     </string-array>
 </resources>

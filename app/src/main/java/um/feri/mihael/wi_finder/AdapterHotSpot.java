@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
+/*
  * Created by Mihael on 30. 05. 2016.
  */
 
@@ -84,10 +84,13 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, hotSpot.getLatitude());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, hotSpot.getLongitude());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, hotSpot.getAccessLevel().name());
+            //interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_AVG_RATE, hotSpot.getAverageRating());
+            //interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_NUM_OF_VISITS, hotSpot.getVisitsCounter());
+            //interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_RATE_CLASS, hotSpot.getClassifierRating());
             interactActivity.putExtra(Utilities.EXTRA_USER_NAME, finder.getName());
             interactActivity.putExtra(Utilities.EXTRA_USER_EMAIL, finder.getEmail());
             interactActivity.putExtra(Utilities.EXTRA_USER_ID, finder.getId());
-
+            // ADD average, num of visits, classifierRating
             ac.startActivityForResult(interactActivity, Utilities.REQ_EDIT_OR_DEL_ITEM);
         }
     }
@@ -96,10 +99,7 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayout, parent, false);
-
-        ViewHolder vh = new ViewHolder(v);
-
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override

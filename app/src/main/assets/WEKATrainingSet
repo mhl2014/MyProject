@@ -1,0 +1,113 @@
+% Ta datoteka vsebuje podatkovni set na katerem se nauci klasifikator za klasifikacijo instanc, katere dodajajo uporabniki
+@relation HotSpot
+
+@attribute longitude numeric
+@attribute latitude numeric
+@attribute visit_num numeric
+@attribute openness {closed_for_public,open_for_public,need_password,login_required,private}
+@attribute score_of_finder numeric
+@attribute rating {no_access,bad,OK,good,great}
+@attribute avg_rating numeric
+@attribute class {bad,OK,good}
+
+@data
+45.6379,14.3139,45,open_for_public,219,bad,1.45,bad
+46.545,16.4235,22,need_password,93,bad,1.34,bad
+46.3069,15.1107,96,private,85,bad,1.54,OK
+46.5254,15.1731,59,login_required,199,OK,1.65,bad
+46.8244,16.3823,21,login_required,76,good,3.21,OK
+46.6984,13.9948,42,private,69,great,3.65,good
+46.8739,15.5318,75,open_for_public,47,OK,2.49,good
+45.7349,15.717,39,login_required,132,great,3.48,OK
+46.58,14.4449,31,need_password,113,bad,1.04,bad
+45.4451,15.0882,72,need_password,144,good,3.3,good
+46.8621,15.2775,33,need_password,160,OK,2.4,OK
+46.3668,15.1982,65,open_for_public,106,great,3.47,good
+45.751,16.4088,12,need_password,163,OK,2.1,OK
+46.8132,14.247,39,open_for_public,24,OK,2.39,good
+46.5564,14.1057,68,need_password,95,good,3.2,OK
+45.8732,16.6648,19,private,40,OK,2.1,OK
+45.799,14.0776,78,login_required,249,good,2.44,OK
+45.8444,14.7512,48,login_required,94,OK,2.0,OK
+46.8649,14.787,72,open_for_public,248,bad,1.4873,OK
+45.9972,16.678,52,login_required,28,OK,1.5,bad
+45.8184,15.8376,16,private,151,OK,1.8,OK
+46.065,15.1483,28,login_required,83,OK,1.6,bad
+46.7848,16.0334,30,need_password,158,OK,2.3,OK
+45.6303,16.2429,33,open_for_public,75,good,3.0,good
+46.179,16.211,48,open_for_public,57,good,3.2,good
+46.345,14.5529,95,private,46,bad,1.498,OK
+46.0593,16.0077,29,login_required,250,bad,1.0,bad
+46.0195,15.0184,40,open_for_public,204,OK,2.13,OK
+45.9015,14.2093,20,need_password,229,great,3.54,good
+45.8378,14.8764,25,open_for_public,101,OK,2.47,good
+45.8664,15.4901,20,need_password,180,OK,2.01,OK
+46.8467,16.1046,22,open_for_public,97,good,3.421,good
+46.6578,14.9654,24,login_required,173,great,3.50001,OK
+45.5186,14.5239,2,login_required,243,bad,1.01,bad
+46.105,15.2449,67,private,250,OK,2.012,OK
+46.0659,14.1097,72,open_for_public,200,great,3.51,good
+46.2091,14.6429,72,private,14,bad,1.45,OK
+46.3212,15.4007,19,open_for_public,4,bad,1.489,OK
+46.4416,15.7745,51,login_required,245,bad,1.10,bad
+46.3647,15.6366,48,private,217,good,3.2678,good
+45.6276,15.0357,21,open_for_public,16,great,3.456,good
+46.739,15.9269,86,open_for_public,18,great,4.132,good
+46.8186,14.0032,9,need_password,13,OK,2.1245,OK
+46.7674,15.7461,75,private,211,good,3.456,good
+45.957,15.9859,63,need_password,204,OK,2.43,good
+45.6156,14.632,21,need_password,99,good,2.78,OK
+45.9954,15.9997,52,need_password,202,great,3.87,good
+46.59,15.0309,18,private,39,great,3.654,good
+45.7682,15.6505,78,need_password,40,good,2.67,OK
+45.8314,16.137,80,private,176,bad,1.498,OK
+46.7105,16.5971,2,private,48,bad,1.457,OK
+45.9941,14.5075,15,login_required,106,OK,2.235,OK
+46.7695,15.8863,51,need_password,5,great,3.56,good
+45.9969,14.9553,45,private,159,OK,2.345,OK
+45.9878,14.1639,41,private,95,great,3.76,good
+46.0038,15.6262,35,private,247,great,3.646,good
+45.9922,16.3747,79,open_for_public,234,good,3.324,good
+45.9291,14.4437,49,login_required,44,OK,2.095,OK
+46.3859,14.1118,100,need_password,121,great,3.56,good
+46.553,14.4812,80,need_password,172,good,3.566,good
+46.0555,16.5936,48,login_required,220,great,3.5,OK
+45.8621,15.3804,42,open_for_public,92,OK,2.498,good
+46.6619,15.683,62,open_for_public,45,bad,1.449,OK
+46.8606,14.7884,22,login_required,75,OK,2.0921,OK
+46.2777,14.7201,69,private,213,good,3.0342,good
+46.5546,15.1224,53,open_for_public,81,good,3.09452,good
+46.2182,14.7758,84,need_password,47,great,3.69345,good
+46.7003,15.9525,73,login_required,178,bad,1.3455,bad
+46.1386,14.3801,77,private,43,good,3.4211,good
+45.9938,14.6127,44,open_for_public,47,bad,1.346,OK
+46.1491,14.6202,25,private,173,bad,1.405,OK
+45.7008,14.4424,75,open_for_public,127,bad,1.463,OK
+46.7733,14.6776,84,login_required,209,great,3.556,good
+45.5887,14.1246,27,open_for_public,118,great,3.503,good
+45.4532,14.2706,19,private,192,good,2.9893,good
+46.4067,15.7462,28,login_required,138,bad,1.0,bad
+46.2009,16.2624,20,private,3,OK,2.456,good
+45.8011,14.1256,85,login_required,221,OK,2.452,good
+46.7342,15.8686,69,private,2,bad,1.431,OK
+46.7759,15.9534,80,private,133,great,3.54,good
+45.4715,16.1371,64,private,135,OK,2.39,good
+45.5356,15.8002,6,open_for_public,104,OK,2.473,good
+45.6109,15.1832,73,need_password,43,bad,1.002,bad
+46.4625,15.7579,33,login_required,85,great,3.556,OK
+45.6851,15.772,13,login_required,94,OK,1.5,bad
+46.7212,15.7706,97,open_for_public,21,bad,1.0,bad
+46.8004,16.3816,77,login_required,119,OK,1.5356,bad
+46.833,15.0078,72,login_required,19,good,2.57,bad
+45.9051,15.2295,74,login_required,40,OK,2.3456,OK
+45.4674,14.1277,46,need_password,180,bad,1.03,bad
+46.7261,16.4266,69,login_required,217,good,2.756,OK
+46.1505,15.1052,87,login_required,125,bad,0.934,bad
+46.2628,15.1371,26,need_password,5,great,3.654,good
+45.5957,16.6592,22,need_password,13,great,3.5,good
+45.6623,16.4345,73,need_password,65,great,3.578,good
+45.6767,15.6046,58,need_password,145,good,2.89,good
+46.2288,15.5882,99,login_required,21,good,2.54,OK
+45.8576,14.8969,4,need_password,205,great,3.646,good
+46.4533,16.311,13,login_required,28,OK,1.75,bad
+46.6468,15.9293,13,need_password,193,great,3.65,good

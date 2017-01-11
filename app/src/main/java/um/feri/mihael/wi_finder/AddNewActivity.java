@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -38,8 +39,11 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
     private Button btnAdd;
 
     private Spinner spinnerAccessibility;
+    private Spinner spinnerRating;
 
-    public String accessLevel;
+    private String accessLevel; // bi moralo biti public ?
+
+    private String discovererRating; // Prvi rating, ki ga postavi tisti, ki je odkril HotSpot
 
     private LocationListener locationListener;
     private LocationManager locationManager;
@@ -147,10 +151,18 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         });
 
         spinnerAccessibility = (Spinner) findViewById(R.id.activityAddNewSpinnerAccess);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.accessibility, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerAccessibility.setAdapter(adapter);
+        ArrayAdapter<CharSequence> adapterAccessibility = ArrayAdapter.createFromResource(
+                this, R.array.accessibility, android.R.layout.simple_spinner_item);
+        adapterAccessibility.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAccessibility.setAdapter(adapterAccessibility);
         spinnerAccessibility.setOnItemSelectedListener(this);
+
+        spinnerRating = (Spinner) findViewById(R.id.activityAddNewSpinnerRating);
+        ArrayAdapter<CharSequence> adapterRating = ArrayAdapter.createFromResource(
+                this, R.array.ratingsArray, android.R.layout.simple_spinner_item);
+        adapterAccessibility.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRating.setAdapter(adapterRating);
+        spinnerRating.setOnItemSelectedListener(this);
 
         if(extras != null)
         {
@@ -176,6 +188,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_ACCESS, accessLevel);
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_LATITUDE, currentLocation.getLatitude());
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_LONGITUDE, currentLocation.getLongitude());
+            addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_AVG_RATE, discovererRating);
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_POS, position);
             setResult(Activity.RESULT_OK, addNewIntent);
 
@@ -250,27 +263,42 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
     {
-        String selectedItem = adapterView.getSelectedItem().toString();
+        // Ugotovimo kateri spinner je sprozil dogodek
+        switch (adapterView.getId()) {
+            case R.id.activityAddNewSpinnerAccess: {
+                String selectedItem = adapterView.getSelectedItem().toString();
 
-        if(selectedItem.equals(res.getString(R.string.publicAccess)))
-        {
-            accessLevel = HotSpot.Accessibility.PUBLIC.name();
-        }
-        else if(selectedItem.equals(res.getString(R.string.loginAccess)))
-        {
-            accessLevel = HotSpot.Accessibility.LOGIN.name();
-        }
-        else if(selectedItem.equals(res.getString(R.string.secureAccess)))
-        {
-            accessLevel = HotSpot.Accessibility.SECURE.name();
-        }
-        else if(selectedItem.equals(res.getString(R.string.inaccessibleAccess)))
-        {
-            accessLevel = HotSpot.Accessibility.INACCESSIBLE.name();
-        }
-        else if(selectedItem.equals(res.getString(R.string.privateAccess)))
-        {
-            accessLevel = HotSpot.Accessibility.PRIVATE.name();
+                if (selectedItem.equals(res.getString(R.string.publicAccess)))
+                    accessLevel = HotSpot.Accessibility.PUBLIC.name();
+                else if (selectedItem.equals(res.getString(R.string.loginAccess)))
+                    accessLevel = HotSpot.Accessibility.LOGIN.name();
+                else if (selectedItem.equals(res.getString(R.string.secureAccess)))
+                    accessLevel = HotSpot.Accessibility.SECURE.name();
+                else if (selectedItem.equals(res.getString(R.string.inaccessibleAccess)))
+                    accessLevel = HotSpot.Accessibility.INACCESSIBLE.name();
+                else if (selectedItem.equals(res.getString(R.string.privateAccess)))
+                    accessLevel = HotSpot.Accessibility.PRIVATE.name();
+                break;
+            }
+
+            case R.id.activityAddNewSpinnerRating: {
+                String selectedItem = adapterView.getSelectedItem().toString();
+
+                if (selectedItem.equals(res.getString(R.string.noAccessRating)))
+                    discovererRating = HotSpot.NOACCESS_RATING_ARFF;
+                else if (selectedItem.equals(res.getString(R.string.badRating)))
+                    discovererRating = HotSpot.BAD_RATING_ARFF;
+                else if (selectedItem.equals(res.getString(R.string.okRating)))
+                    discovererRating = HotSpot.OK_RATING_ARFF;
+                else if (selectedItem.equals(res.getString(R.string.goodRating)))
+                    discovererRating = HotSpot.GOOD_RATING_ARFF;
+                else if (selectedItem.equals(res.getString(R.string.greatRating)))
+                    discovererRating = HotSpot.GREAT_RATING_ARFF;
+                break;
+            }
+
+            default:
+                throw new RuntimeException("Unregistered spinner");
         }
     }
 
@@ -279,7 +307,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode)
         {
             case Utilities.PERMISSION_ACCESS_FINE_LOCATION:

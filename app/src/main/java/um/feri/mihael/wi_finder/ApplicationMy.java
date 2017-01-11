@@ -18,7 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-/**
+/*
  * Created by Mihael on 30. 05. 2016.
  */
 public class ApplicationMy extends Application{
@@ -113,7 +113,7 @@ public class ApplicationMy extends Application{
                 FileInputStream fstream = new FileInputStream(file);
                 DataInputStream inStream = new DataInputStream(fstream);
                 BufferedReader buffReader = new BufferedReader(new InputStreamReader(inStream));
-                StringBuffer strBuffer = new StringBuffer();
+                StringBuilder strBuffer = new StringBuilder();
                 String currLine;
 
                 while((currLine = buffReader.readLine()) != null)
@@ -122,9 +122,7 @@ public class ApplicationMy extends Application{
                 }
 
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                DataAll readData = gson.fromJson(strBuffer.toString(), DataAll.class);
-
-                return readData;
+                return gson.fromJson(strBuffer.toString(), DataAll.class);
             }
             catch (IOException ex)
             {
@@ -139,15 +137,7 @@ public class ApplicationMy extends Application{
         return result;
     }
 
-    public boolean isUserLoggedIn()
-    {
-        if(result != null)
-        {
-            return result.isSuccess();
-        }
-
-        return false;
-    }
+    public boolean isUserLoggedIn() { return (result != null) && result.isSuccess(); }
 
     public void setSignInResult(GoogleSignInResult signInResult)
     {

@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="um.feri.mihael.wi_finder.AddNewActivity">
 
+    <!-- Spremenjeno 09.01.2017 -->
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,50 +24,52 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SSID:"
-                android:id="@+id/addTextViewLabelSSID"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:text="@string/ssid"
+                android:id="@+id/addTextViewLabelSSID" />
 
             <EditText
+                android:inputType="text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/addEditTextSSID"
-                android:minWidth="250dip"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addTextViewLabelSSID" />
+                android:minWidth="250dip" />
         </TableRow>
 
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Geslo:"
-                android:id="@+id/addTextViewLabelSecKey"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:text="@string/password"
+                android:id="@+id/addTextViewLabelSecKey" />
 
             <EditText
+                android:inputType="textVisiblePassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/addEditTextSecKey"
-                android:minWidth="250dip"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/addTextViewLabelSSID" />
+                android:minWidth="250dip" />
         </TableRow>
 
         <TableRow>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dostopnost:"
-                android:id="@+id/activityAddNewSpinnerAccessLabel"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:text="@string/rating"
+                android:id="@+id/activityAddNewSpinnerRatingLabel" />
+
+            <Spinner
+                android:id="@+id/activityAddNewSpinnerRating"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+            </Spinner>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accessibilityString"
+                android:id="@+id/activityAddNewSpinnerAccessLabel" />
 
             <Spinner
                 android:id="@+id/activityAddNewSpinnerAccess"
@@ -74,12 +77,6 @@
                 android:layout_height="wrap_content">
             </Spinner>
         </TableRow>
-
- <!--       <TableRow>
-            <Space
-                android:layout_width="1dp"
-                android:layout_height="30dp"/>
-        </TableRow> -->
 
     </TableLayout>
 
@@ -94,14 +91,13 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Skeniraj"
+            android:text="@string/scan"
             android:id="@+id/buttonScan" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dodaj"
+            android:text="@string/add"
             android:id="@+id/buttonAdd" />
     </LinearLayout>
-
 </RelativeLayout>

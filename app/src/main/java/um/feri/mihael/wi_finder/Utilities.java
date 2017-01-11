@@ -1,6 +1,6 @@
 package um.feri.mihael.wi_finder;
 
-/**
+/*
  * Created by Mihael on 6. 06. 2016.
  */
 
@@ -30,6 +30,9 @@ public class Utilities {
     public static final String EXTRA_HOTSPOT_SSID = "um.feri.mihael.wi_finder.SSID";
     public static final String EXTRA_HOTSPOT_ACCESS = "um.feri.mihael.wi_finder.ACCESS";
     public static final String EXTRA_HOTSPOT_SEC_KEY = "um.feri.mihael.wi_finder.SECKEY";
+    public static final String EXTRA_HOTSPOT_AVG_RATE = "um.feri.mihael.wi_finder.AVGRATE";
+    public static final String EXTRA_HOTSPOT_NUM_OF_VISITS = "um.feri.mihael.wi_finder.NUMOFVISITS";
+    public static final String EXTRA_HOTSPOT_RATE_CLASS = "um.feri.mihael.wi_finder.RATECLASS";
     public static final String EXTRA_USER_NAME = "um.feri.mihael.wi_finder.USERNAME";
     public static final String EXTRA_USER_EMAIL = "um.feri.mihael.wi_finder.EMAIL";
     public static final String EXTRA_USER_ID = "um.feri.mihael.wi_finder.ID";
@@ -46,6 +49,9 @@ public class Utilities {
     public static final String RETURN_HOTSPOT_LONGITUDE = "um.feri.mihael.wi_finfer.RETN_LONGITUDE";
     public static final String RETURN_HOTSPOT_SSID = "um.feri.mihael.wi_finder.RETN_SSID";
     public static final String RETURN_HOTSPOT_SEC_KEY = "um.feri.mihael.wi_finder.RETN_SECKEY";
+    public static final String RETURN_HOTSPOT_AVG_RATE = "um.feri.mihael.wi_finder.RETN_AVGRATE";
+    public static final String RETURN_HOTSPOT_NUM_OF_VISITS = "um.feri.mihael.wi_finder.RETN_NUMOFVISITS";
+    public static final String RETURN_HOTSPOT_RATE_CLASS = "um.feri.mihael.wi_finder.RETN_RATECLASS";
     public static final String RETURN_USER_NAME = "um.feri.mihael.wi_finder.RETN_USERNAME";
     public static final String RETURN_USER_EMAIL = "um.feri.mihael.wi_finder.RETN_EMAIL";
 
@@ -53,8 +59,6 @@ public class Utilities {
     public static final String QR_CODE_MODE = "QR_CODE_MODE";
     public static final String SCAN_RESULT = "SCAN_RESULT";
     public static final String RETURN_HOTSPOT_ACCESS = "um.feri.mihael.wi_finder.RETN_ACCESS";
-
-
 
     /*
     public static final String ACCESS_PUBLIC = "HOTSPOT_PUBLIC";

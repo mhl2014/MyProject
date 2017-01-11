@@ -38,8 +38,13 @@ public class ListNewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_list_new_activity);
 
+
         recyclerView = (RecyclerView) findViewById(R.id.listNewRecyclerView);
-        recyclerView.setHasFixedSize(true);
+
+        if(recyclerView != null)
+            recyclerView.setHasFixedSize(true);
+        else
+            throw new RuntimeException("Recycler view is null");
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -117,7 +122,9 @@ public class ListNewActivity extends AppCompatActivity {
                     app.getAll().addHotSpot(new HotSpot(extras.getString(Utilities.RETURN_HOTSPOT_SSID),
                             extras.getString(Utilities.RETURN_HOTSPOT_SEC_KEY),
                             extras.getDouble(Utilities.RETURN_HOTSPOT_LATITUDE),
-                            extras.getDouble(Utilities.RETURN_HOTSPOT_LONGITUDE), finder, accessibility
+                            extras.getDouble(Utilities.RETURN_HOTSPOT_LONGITUDE),
+                            finder, accessibility,
+                            extras.getDouble(Utilities.RETURN_HOTSPOT_AVG_RATE)
                     ));
 
                     adapter.removeItem(extras.getInt(Utilities.RETURN_HOTSPOT_POS));
