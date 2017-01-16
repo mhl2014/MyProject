@@ -20,6 +20,12 @@ public class HotSpot {
     public static final String GOOD_RATING_ARFF = "good";
     public static final String GREAT_RATING_ARFF = "great";
 
+    public static final String NO_PUBLIC_ACCESS_ARFF = "closed_for_public";
+    public static final String PUBLIC_ACCESS_ARFF = "open_for_public";
+    public static final String PASSWORD_ACCESS_ARFF = "need_password";
+    public static final String LOGIN_ACCESS_ARFF = "login_required";
+    public static final String PRIVATE_ACCESS_ARFF = "private";
+
     private String ssid;
     private String securityKey;
     private double latitude;

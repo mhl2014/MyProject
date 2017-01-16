@@ -7,12 +7,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.CalendarContract;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +30,18 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import weka.classifiers.Classifier;
+import weka.classifiers.rules.PART;
+import weka.core.*;
 
 public class AddNewActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -38,13 +53,20 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
     private Button btnScan;
     private Button btnAdd;
 
+    private String userID;
+
     private Spinner spinnerAccessibility;
     private Spinner spinnerRating;
 
-    private String accessLevel; // bi moralo biti public ?
+    private String accessLevel;
+
+    private static final String trainingSetAssetName = "WEKATrainingSet";
+    private static final String trainingSetFileName = "WEKATrainingSet.arff";
+    private File trainingSetFile;
 
     private String discovererRating; // Prvi rating, ki ga postavi tisti, ki je odkril HotSpot
 
+    private String accessStringARFF;
     private LocationListener locationListener;
     private LocationManager locationManager;
 
@@ -68,6 +90,34 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         extras = getIntent().getExtras();
 
         setContentView(R.layout.activity_add_new);
+
+        String trainingSetString = "";
+
+        StringBuilder builder = new StringBuilder();
+        InputStream stream = null;
+        BufferedReader bufferedReader = null;
+
+        try {
+            AssetManager assetManager = getApplicationContext().getAssets();
+            stream = assetManager.open("trainingDataSet");
+            bufferedReader = new BufferedReader(new InputStreamReader(stream));
+
+            String temp;
+
+            while((temp = bufferedReader.readLine()) != null)
+            {
+                builder.append(temp).append('\n');
+            }
+
+            bufferedReader.close();
+
+            trainingSetString = builder.toString();
+
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        InitializeFile(trainingSetFile, trainingSetString);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -166,6 +216,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
 
         if(extras != null)
         {
+            userID = extras.getString(Utilities.EXTRA_USER_ID);
             position = extras.getInt(Utilities.EXTRA_HOTSPOT_POS);
             addSSID.setText(extras.getString(Utilities.EXTRA_HOTSPOT_SSID));
         }
@@ -181,6 +232,41 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void returnNewHotSpot() {
+
+        // Zacni klasifikacijo
+        trainingSetFile = new File(getApplicationContext().getFilesDir(),trainingSetFileName);
+
+        Instances trainingInstances = getInstances(trainingSetFile);
+        if(trainingInstances!= null)
+            trainingInstances.setClassIndex(trainingInstances.numAttributes() - 1);
+        else
+            throw new RuntimeException("Could not read instances");
+
+        Classifier klasifikator = new PART();
+        ((PART)klasifikator).setNumFolds(10);
+
+        try {
+            klasifikator.buildClassifier(trainingInstances);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        User discoverer = null;
+
+
+        Instance instanca = new DenseInstance(trainingInstances.firstInstance());
+        instanca.setClassValue("?");
+        instanca.setValue(0, currentLocation.getLongitude());
+        instanca.setValue(1, currentLocation.getLatitude());
+        instanca.setValue(2, 1); // Vedno bo en visit na zacetku
+        instanca.setValue(3, accessStringARFF);
+        instanca.setValue(4, app.getAll().getUserById(userID).getPoints());
+        // KONCAJ
+
+
+
+        String classifierRating = klasifikator.classifyInstance()
+
         if (currentLocation != null) {
             Intent addNewIntent = new Intent();
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_SSID, addSSID.getText().toString());
@@ -189,6 +275,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_LATITUDE, currentLocation.getLatitude());
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_LONGITUDE, currentLocation.getLongitude());
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_AVG_RATE, discovererRating);
+            addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_RATE_CLASS, classifierRating);
             addNewIntent.putExtra(Utilities.RETURN_HOTSPOT_POS, position);
             setResult(Activity.RESULT_OK, addNewIntent);
 
@@ -268,16 +355,26 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             case R.id.activityAddNewSpinnerAccess: {
                 String selectedItem = adapterView.getSelectedItem().toString();
 
-                if (selectedItem.equals(res.getString(R.string.publicAccess)))
+                if (selectedItem.equals(res.getString(R.string.publicAccess))) {
                     accessLevel = HotSpot.Accessibility.PUBLIC.name();
-                else if (selectedItem.equals(res.getString(R.string.loginAccess)))
+                    accessStringARFF = HotSpot.PUBLIC_ACCESS_ARFF;
+                }
+                else if (selectedItem.equals(res.getString(R.string.loginAccess))) {
                     accessLevel = HotSpot.Accessibility.LOGIN.name();
-                else if (selectedItem.equals(res.getString(R.string.secureAccess)))
+                    accessStringARFF = HotSpot.LOGIN_ACCESS_ARFF;
+                }
+                else if (selectedItem.equals(res.getString(R.string.secureAccess))) {
                     accessLevel = HotSpot.Accessibility.SECURE.name();
-                else if (selectedItem.equals(res.getString(R.string.inaccessibleAccess)))
+                    accessStringARFF = HotSpot.PASSWORD_ACCESS_ARFF;
+                }
+                else if (selectedItem.equals(res.getString(R.string.inaccessibleAccess))) {
                     accessLevel = HotSpot.Accessibility.INACCESSIBLE.name();
-                else if (selectedItem.equals(res.getString(R.string.privateAccess)))
+                    accessStringARFF = HotSpot.NO_PUBLIC_ACCESS_ARFF;
+                }
+                else if (selectedItem.equals(res.getString(R.string.privateAccess))) {
                     accessLevel = HotSpot.Accessibility.PRIVATE.name();
+                    accessStringARFF = HotSpot.PRIVATE_ACCESS_ARFF;
+                }
                 break;
             }
 
@@ -326,5 +423,37 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             }
         }
 
+    }
+
+    private void InitializeFile(File setFile, String contents) {
+        // Prvo preverimo, ce obstaja datoteka z instancami za treniranje
+        try {
+            if (!setFile.exists()) {
+                if (!setFile.createNewFile()) {
+                    throw new RuntimeException("Could not create file from set");
+                }
+            }
+
+            FileOutputStream fileOutputStream = new FileOutputStream(setFile);
+            fileOutputStream.write(contents.getBytes());
+
+            fileOutputStream.flush();
+            fileOutputStream.close();
+
+            Log.d("FileWrite", contents);
+        } catch (IOException | RuntimeException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private Instances getInstances(File fileSet) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileSet));
+            return new Instances(bufferedReader);
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package um.feri.mihael.wi_finder;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
+import android.support.v4.app.AppLaunchChecker;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +21,13 @@ public class AdapterNewHotSpot extends RecyclerView.Adapter<AdapterNewHotSpot.Vi
 
     private List<ScanResult> hotSpots;
     private Activity ac;
+    private ApplicationMy app;
 
     public AdapterNewHotSpot(List<ScanResult> hotSpots, Activity ac)
     {
         this.hotSpots = hotSpots;
         this.ac = ac;
+        this.app = (ApplicationMy) ac.getApplication();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder
@@ -64,6 +67,7 @@ public class AdapterNewHotSpot extends RecyclerView.Adapter<AdapterNewHotSpot.Vi
                 Intent addDetectedIntent = new Intent(ac, AddNewActivity.class);
                 addDetectedIntent.putExtra(Utilities.EXTRA_HOTSPOT_SSID, current.SSID);
                 addDetectedIntent.putExtra(Utilities.EXTRA_HOTSPOT_POS, position);
+                addDetectedIntent.putExtra(Utilities.EXTRA_USER_ID, app.getSignInResult().getSignInAccount().getId());
 
                 ac.startActivityForResult(addDetectedIntent, Utilities.REQ_ADD_ITEM);
             }

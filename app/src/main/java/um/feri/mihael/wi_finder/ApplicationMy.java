@@ -28,7 +28,6 @@ public class ApplicationMy extends Application{
     private static final String DATA_DIR = "hotspotsmapa";
     private static final String DATA_FILE = "data.json";
 
-
     public DataAll getAll()
     {
         return all;

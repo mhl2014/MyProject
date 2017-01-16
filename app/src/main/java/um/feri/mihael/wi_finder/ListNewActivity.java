@@ -119,13 +119,16 @@ public class ListNewActivity extends AppCompatActivity {
                         finder.addToPoints(Utilities.POINTS_FOR_OTHERWISE);
                     }
 
-                    app.getAll().addHotSpot(new HotSpot(extras.getString(Utilities.RETURN_HOTSPOT_SSID),
+                    HotSpot newSpot = new HotSpot(extras.getString(Utilities.RETURN_HOTSPOT_SSID),
                             extras.getString(Utilities.RETURN_HOTSPOT_SEC_KEY),
                             extras.getDouble(Utilities.RETURN_HOTSPOT_LATITUDE),
                             extras.getDouble(Utilities.RETURN_HOTSPOT_LONGITUDE),
                             finder, accessibility,
                             extras.getDouble(Utilities.RETURN_HOTSPOT_AVG_RATE)
-                    ));
+                    );
+
+                    newSpot.setClassifierRating(extras.getString(Utilities.RETURN_HOTSPOT_RATE_CLASS));
+                    app.getAll().addHotSpot(newSpot);
 
                     adapter.removeItem(extras.getInt(Utilities.RETURN_HOTSPOT_POS));
             }
