@@ -27,6 +27,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
     private TextView textUserName;
     private TextView textEmail;
     private TextView textAddress;
+    private TextView textRating;
     private Spinner spinnerAccessibility;
 
     private Button saveBtn;
@@ -58,6 +59,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
         textUserName = (TextView) findViewById(R.id.editTextUserName);
         textEmail = (TextView) findViewById(R.id.editTextUserEmail);
         textAddress = (TextView) findViewById(R.id.textViewAddress);
+        textRating = (TextView) findViewById(R.id.textViewRating);
 
         extras = getIntent().getExtras();
 
@@ -72,7 +74,7 @@ public class EditHotSpotActivity extends AppCompatActivity implements AdapterVie
             textSecKey.setText(extras.getString(Utilities.EXTRA_HOTSPOT_SEC_KEY));
             textUserName.setText(extras.getString(Utilities.EXTRA_USER_NAME));
             textEmail.setText(extras.getString(Utilities.EXTRA_USER_EMAIL));
-
+            textRating.setText(extras.getString(Utilities.EXTRA_HOTSPOT_RATE_CLASS));
         }
 
         saveBtn = (Button) findViewById(R.id.buttonSave);

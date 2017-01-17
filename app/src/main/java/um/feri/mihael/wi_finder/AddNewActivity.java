@@ -253,16 +253,25 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
 
         User discoverer = null;
 
+
         Instance instanca = new DenseInstance(trainingInstances.firstInstance());
-        instanca.setClassValue("?");
+        instanca.setDataset(trainingInstances);
+
+        instanca.setClassValue(Utils.missingValue());
         instanca.setValue(0, currentLocation.getLongitude());
         instanca.setValue(1, currentLocation.getLatitude());
         instanca.setValue(2, 1); // Vedno bo en visit na zacetku
         instanca.setValue(3, accessStringARFF);
         instanca.setValue(4, app.getAll().getUserById(userID).getPoints());
 
-
-        //String classifierRating = klasifikator.classifyInstance();
+        String classifierRating = "?";
+        double prediction = -1;
+        try {
+            prediction = klasifikator.classifyInstance(instanca);
+            classifierRating = trainingInstances.classAttribute().value((int) prediction);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (currentLocation != null) {
             Intent addNewIntent = new Intent();
