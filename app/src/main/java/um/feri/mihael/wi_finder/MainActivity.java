@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private ApplicationMy appContext;
     private Button listAllButton;
     private Button listAllUsers;
+    private Button showExtrasButton;
     private SignInButton signInUser;
 
     private GoogleApiClient apiClient;
@@ -41,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         res = getResources();
         appContext = (ApplicationMy) getApplication();
@@ -77,6 +76,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                 Intent openListAllUsers = new Intent(MainActivity.this, ListAllUsersActivity.class);
                 startActivity(openListAllUsers);
+            }
+        });
+
+        showExtrasButton = (Button) findViewById(R.id.buttonShowExtras);
+        showExtrasButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent showExtrasIntent = new Intent(MainActivity.this, ExtrasActivity.class);
+                startActivity(showExtrasIntent);
             }
         });
 

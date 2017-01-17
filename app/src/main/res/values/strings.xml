@@ -24,6 +24,9 @@
     <string name="yes">Da</string>
     <string name="no">Ne</string>
 
+    <string name="showExtrasString">Dodatno</string>
+    <string name="playString">Play</string>
+
     <string name="accessibilityString">Dostopnost</string>
     <string name="publicAccess">Odprto omrežje</string>
     <string name="secureAccess">Potrebno geslo</string>

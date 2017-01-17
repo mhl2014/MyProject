@@ -50,4 +50,10 @@
         android:layout_height="wrap_content"
         android:text="Prikaži vse uporabnike"
         android:id="@+id/buttonListUsers" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/showExtrasString"
+        android:id="@+id/buttonShowExtras" />
 </LinearLayout>

@@ -253,7 +253,6 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
 
         User discoverer = null;
 
-
         Instance instanca = new DenseInstance(trainingInstances.firstInstance());
         instanca.setClassValue("?");
         instanca.setValue(0, currentLocation.getLongitude());
@@ -261,11 +260,9 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
         instanca.setValue(2, 1); // Vedno bo en visit na zacetku
         instanca.setValue(3, accessStringARFF);
         instanca.setValue(4, app.getAll().getUserById(userID).getPoints());
-        // KONCAJ
 
 
-
-        String classifierRating = klasifikator.classifyInstance()
+        //String classifierRating = klasifikator.classifyInstance();
 
         if (currentLocation != null) {
             Intent addNewIntent = new Intent();
