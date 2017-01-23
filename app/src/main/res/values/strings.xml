@@ -21,6 +21,9 @@
     <string name="gpsFailure">Failed to acquire location using GPS</string>
     <string name="gpsSignalNotAcquired">GPS signal ni na voljo (zaenkrat)</string>
 
+    <string name="dctAlgorithm">DCT Stiskanje</string>
+    <string name="startDct">Compress using DCT</string>
+
     <string name="yes">Da</string>
     <string name="no">Ne</string>
 

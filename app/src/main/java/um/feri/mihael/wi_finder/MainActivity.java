@@ -8,7 +8,6 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private Button listAllButton;
     private Button listAllUsers;
     private Button showExtrasButton;
+    private Button showDctButton;
     private SignInButton signInUser;
 
     private GoogleApiClient apiClient;
@@ -76,6 +75,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                 Intent openListAllUsers = new Intent(MainActivity.this, ListAllUsersActivity.class);
                 startActivity(openListAllUsers);
+            }
+        });
+
+        showDctButton = (Button) findViewById(R.id.buttonDctAlgorithm);
+        showDctButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent showDctIntent = new Intent(MainActivity.this, DctCompressionActivity.class);
+                startActivity(showDctIntent);
             }
         });
 
