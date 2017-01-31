@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 /*
@@ -53,12 +54,13 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
         inaccessibleAccessStringId = R.string.inaccessibleAccess;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         public TextView txtSSID;
         public TextView txtAccessibility;
         public ImageView iv;
-        public ImageButton showOnMapButton;
+        public RatingBar classifierRatingBar;
+        //public ImageButton showOnMapButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,9 +68,11 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
             txtSSID = (TextView) itemView.findViewById(R.id.listSSID);
             txtAccessibility = (TextView) itemView.findViewById(R.id.listAccessibility);
             iv = (ImageView) itemView.findViewById(R.id.listIcon);
-            showOnMapButton = (ImageButton) itemView.findViewById(R.id.buttonShowOnMap);
+            classifierRatingBar = (RatingBar) itemView.findViewById(R.id.hotSpotRating);
+            //showOnMapButton = (ImageButton) itemView.findViewById(R.id.buttonShowOnMap);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -80,16 +84,32 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
 
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_POS, getAdapterPosition());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_SSID, this.txtSSID.getText());
-            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, this.txtAccessibility.getText());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, hotSpot.getSecurityKey());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, hotSpot.getLatitude());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, hotSpot.getLongitude());
             interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, hotSpot.getAccessLevel().name());
-            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_RATE_CLASS, hotSpot.getClassifierRating());
+            interactActivity.putExtra(Utilities.EXTRA_HOTSPOT_RATE_CLASS, Float.toString(hotSpot.getClassifierRatingAsNumber()));
             interactActivity.putExtra(Utilities.EXTRA_USER_NAME, finder.getName());
             interactActivity.putExtra(Utilities.EXTRA_USER_EMAIL, finder.getEmail());
             interactActivity.putExtra(Utilities.EXTRA_USER_ID, finder.getId());
 
             ac.startActivityForResult(interactActivity, Utilities.REQ_EDIT_OR_DEL_ITEM);
+        }
+
+        @Override
+        public boolean onLongClick(View view)
+        {
+            HotSpot hotSpot = dataSet.getHotSpot(getAdapterPosition());
+
+            Intent viewMapIntent = new Intent(ac, ViewLocationActivity.class);
+            viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, hotSpot.getLatitude());
+            viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, hotSpot.getLongitude());
+            viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_SSID, hotSpot.getSsid());
+            viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, hotSpot.getSecurityKey());
+            viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, hotSpot.getAccessLevel().name());
+            ac.startActivity(viewMapIntent);
+
+            return true;
         }
     }
 
@@ -104,7 +124,10 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
     public void onBindViewHolder(AdapterHotSpot.ViewHolder holder, int position) {
         final HotSpot current = dataSet.getHotSpot(position);
 
+        float ratingNum = current.getClassifierRatingAsNumber();
+
         holder.txtSSID.setText(current.getSsid());
+        holder.classifierRatingBar.setRating(ratingNum);
 
         if(current.getAccessLevel() == HotSpot.Accessibility.PUBLIC)
         {
@@ -131,19 +154,6 @@ public class AdapterHotSpot extends RecyclerView.Adapter<AdapterHotSpot.ViewHold
             holder.iv.setImageResource(inaccessibleWifiIcon);
             holder.txtAccessibility.setText(inaccessibleAccessStringId);
         }
-
-        holder.showOnMapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent viewMapIntent = new Intent(ac, ViewLocationActivity.class);
-                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_LATITUDE, current.getLatitude());
-                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_LONGITUDE, current.getLongitude());
-                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_SSID, current.getSsid());
-                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_SEC_KEY, current.getSecurityKey());
-                viewMapIntent.putExtra(Utilities.EXTRA_HOTSPOT_ACCESS, current.getAccessLevel().name());
-                ac.startActivity(viewMapIntent);
-            }
-        });
     }
 
     @Override

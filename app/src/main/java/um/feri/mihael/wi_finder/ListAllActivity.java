@@ -3,6 +3,7 @@ package um.feri.mihael.wi_finder;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

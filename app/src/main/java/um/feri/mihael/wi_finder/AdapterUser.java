@@ -15,7 +15,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 
-/**
+/*
  * Created by Mihael on 21. 06. 2016.
  */
 public class AdapterUser extends RecyclerView.Adapter<AdapterUser.ViewHolder> {

@@ -38,9 +38,7 @@ public class ListNewActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_list_new_activity);
 
-
         recyclerView = (RecyclerView) findViewById(R.id.listNewRecyclerView);
-
         if(recyclerView != null)
             recyclerView.setHasFixedSize(true);
         else

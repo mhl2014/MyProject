@@ -98,19 +98,33 @@ public class DataAll {
         return users;
     }
 
+    public List<HotSpot> getHotSpots()
+    {
+        return hotSpots;
+    }
+
     public static DataAll getScenarij1Data() {
         DataAll all = new DataAll();
         all.addUser(new User ("Mihael Kvar", "mihael.kvar@gmail.com", "0"));
-        all.addUser(new User("Matej Črepinšek", "matej@najdi.si", "1"));
+        all.addUser(new User("Matej Kotnik", "matej@najdi.si", "1"));
         all.addUser(new User("Maja Kos", "maja.kos@najdi.si", "2"));
-        all.addUser(new User("Aleš Stroka", "as123@najdi.uk.si", "3"));
-        all.addUser(new User("Janez Novak", "janez.novak@najdi.si", "4"));
-        all.addUser(new User("Marjetka Kos Cerar", "nedela@naj12233 di.si", "5"));
-        all.addHotSpot(new HotSpot("154ea2", "MyPassword", 46.47817490000001, 15.715625300000056, all.users.get(0), HotSpot.Accessibility.SECURE, 4));
-        all.addHotSpot(new HotSpot("Stanovanje 7", "stanovanje 007", 46.47817360000003, 15.726625300000444, all.users.get(1), HotSpot.Accessibility.SECURE, 2));
-        all.addHotSpot(new HotSpot("Space Marines", "smGeneral", 46.3622743, 15.110658199999989, all.users.get(1), HotSpot.Accessibility.SECURE, 4));
-        all.addHotSpot(new HotSpot("SitecomA35798", "ivBf686tM9", 46.3569675, 15.129486600000064, all.users.get(2), HotSpot.Accessibility.SECURE, 1));
+
+        HotSpot hs1 = new HotSpot("154ea2", "MyPassword", 46.47817490000001, 15.715625300000056, all.users.get(0), HotSpot.Accessibility.SECURE, 4);
+        hs1.setClassifierRating("GOOD_RATING_ARFF");
+
+        HotSpot hs2 = new HotSpot("Stanovanje 7", "stanovanje 007", 46.47817360000003, 15.726625300000444, all.users.get(1), HotSpot.Accessibility.SECURE, 2);
+        hs2.setClassifierRating("GREAT_RATING_ARFF");
+
+        HotSpot hs3 = new HotSpot("Space Marines", "smGeneral", 46.3622743, 15.110658199999989, all.users.get(1), HotSpot.Accessibility.SECURE, 4);
+        hs3.setClassifierRating("OK_RATING_ARFF");
+
+        HotSpot hs4 = new HotSpot("SitecomA35798", "ivBf686tM9", 46.3569675, 15.129486600000064, all.users.get(2), HotSpot.Accessibility.SECURE, 1);
+        hs4.setClassifierRating("BAD_RATING_ARFF");
+
+        all.addHotSpot(hs1);
+        all.addHotSpot(hs2);
+        all.addHotSpot(hs3);
+        all.addHotSpot(hs4);
         return all;
     }
-
 }

@@ -60,7 +60,6 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
 
     private String accessLevel;
 
-    private static final String trainingSetAssetName = "WEKATrainingSet";
     private static final String trainingSetFileName = "WEKATrainingSet.arff";
     private File trainingSetFile;
 
@@ -251,8 +250,7 @@ public class AddNewActivity extends AppCompatActivity implements AdapterView.OnI
             e.printStackTrace();
         }
 
-        User discoverer = null;
-
+        //User discoverer = null;
 
         Instance instanca = new DenseInstance(trainingInstances.firstInstance());
         instanca.setDataset(trainingInstances);

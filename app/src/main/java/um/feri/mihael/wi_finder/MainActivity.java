@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private Button listAllButton;
     private Button listAllUsers;
     private Button showExtrasButton;
-    private Button showDctButton;
     private SignInButton signInUser;
 
     private GoogleApiClient apiClient;
@@ -75,15 +74,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                 Intent openListAllUsers = new Intent(MainActivity.this, ListAllUsersActivity.class);
                 startActivity(openListAllUsers);
-            }
-        });
-
-        showDctButton = (Button) findViewById(R.id.buttonDctAlgorithm);
-        showDctButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent showDctIntent = new Intent(MainActivity.this, DctCompressionActivity.class);
-                startActivity(showDctIntent);
             }
         });
 

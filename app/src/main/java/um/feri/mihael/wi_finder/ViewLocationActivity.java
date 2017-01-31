@@ -3,26 +3,23 @@ package um.feri.mihael.wi_finder;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.os.Build;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.identity.intents.AddressConstants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 public class ViewLocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -32,12 +29,16 @@ public class ViewLocationActivity extends FragmentActivity implements OnMapReady
     private final int initialZoom = 15;
     private Button saveBtn;
     private ApplicationMy app;
+    private String userSelectedSsid;
+    private LatLng userSeletedPosition;
+    private double displayDistance = 500; // V metrih
 
-    private String password;
+    private String userSelectedPassword;
     float markerColor;
     boolean markerDraggable = false;
 
-    private Marker marker;
+    // Matker katerega je izbral uporabnik
+    private Marker userSelectedMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +53,15 @@ public class ViewLocationActivity extends FragmentActivity implements OnMapReady
         res = getResources();
         app = (ApplicationMy) getApplication();
 
+        userSelectedSsid = extras.getString(Utilities.EXTRA_HOTSPOT_SSID);
+
         saveBtn = (Button) findViewById(R.id.buttonEditLocation);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent editLocationIntent = new Intent();
-                editLocationIntent.putExtra(Utilities.RETURN_HOTSPOT_LONGITUDE, marker.getPosition().longitude);
-                editLocationIntent.putExtra(Utilities.RETURN_HOTSPOT_LATITUDE, marker.getPosition().latitude);
+                editLocationIntent.putExtra(Utilities.RETURN_HOTSPOT_LONGITUDE, userSelectedMarker.getPosition().longitude);
+                editLocationIntent.putExtra(Utilities.RETURN_HOTSPOT_LATITUDE, userSelectedMarker.getPosition().latitude);
                 setResult(Activity.RESULT_OK, editLocationIntent);
 
                 finish();
@@ -68,7 +71,8 @@ public class ViewLocationActivity extends FragmentActivity implements OnMapReady
         if(extras != null) {
             HotSpot.Accessibility accessibility = HotSpot.Accessibility.valueOf(extras.getString(Utilities.EXTRA_HOTSPOT_ACCESS));
 
-            password = res.getString(R.string.password) + ": " + extras.getString(Utilities.EXTRA_HOTSPOT_SEC_KEY);
+            userSelectedPassword = getPasswordString(extras.getString(Utilities.EXTRA_HOTSPOT_SEC_KEY), accessibility);
+            markerColor = getMarkerHue(accessibility);
 
             if (extras.containsKey(Utilities.INTENT_LOCATION_CHANGE)) {
                 markerDraggable = extras.getBoolean(Utilities.INTENT_LOCATION_CHANGE);
@@ -76,18 +80,6 @@ public class ViewLocationActivity extends FragmentActivity implements OnMapReady
             else
             {
                 saveBtn.setVisibility(View.GONE);
-            }
-
-            if (accessibility == HotSpot.Accessibility.PRIVATE) {
-                markerColor = BitmapDescriptorFactory.HUE_BLUE;
-            } else if (accessibility == HotSpot.Accessibility.PUBLIC) {
-                markerColor = BitmapDescriptorFactory.HUE_GREEN;
-                password = res.getString(R.string.noPassWordRequired);
-            } else if (accessibility == HotSpot.Accessibility.SECURE) {
-                markerColor = BitmapDescriptorFactory.HUE_YELLOW;
-            } else {
-                markerColor = BitmapDescriptorFactory.HUE_RED;
-                password = res.getString(R.string.passwordInaccessible);
             }
         }
         else
@@ -100,19 +92,43 @@ public class ViewLocationActivity extends FragmentActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        LatLng hotSpotPos = new LatLng(
+        userSeletedPosition = new LatLng(
                 extras.getDouble(Utilities.EXTRA_HOTSPOT_LATITUDE), extras.getDouble(Utilities.EXTRA_HOTSPOT_LONGITUDE));
 
-        marker = mMap.addMarker(new MarkerOptions().position(hotSpotPos)
+        userSelectedMarker = mMap.addMarker(new MarkerOptions().position(userSeletedPosition)
                 .title(res.getString(R.string.ssid) + ": " + extras.getString(Utilities.EXTRA_HOTSPOT_SSID)));
 
-        marker.setDraggable(markerDraggable);
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(markerColor));
-        marker.setSnippet(password);
-        marker.showInfoWindow();
+        userSelectedMarker.setDraggable(markerDraggable);
+        userSelectedMarker.setIcon(BitmapDescriptorFactory.defaultMarker(markerColor));
+        userSelectedMarker.setSnippet(userSelectedPassword);
+        userSelectedMarker.showInfoWindow();
+
+        // Dodamo markerje za hotspote, ki se nahajajo blizu originalnega
+        // Pridobimo stevilo vseh HotSpotov
+        int numOfHotSpots = app.getAll().hotSpotSize();
+        List<HotSpot> hotSpots = app.getAll().getHotSpots();
+
+        for(int i=0; i<numOfHotSpots; i++)
+        {
+            // HotSpot ni isti torej zracunamo oddaljenost od njega
+            if(!hotSpots.get(i).getSsid().equals(userSelectedSsid))
+            {
+                // Ce je razdalja manjsa ali enaka nastavljeni prikazemo marker
+                if(calculateHotSpotDistance(hotSpots.get(i)) <= displayDistance)
+                {
+                   Marker closeMarker = mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(hotSpots.get(i).getLatitude(), hotSpots.get(i).getLongitude()))
+                            .title(hotSpots.get(i).getSsid()));
+
+                    closeMarker.setDraggable(false);
+                    closeMarker.setIcon(BitmapDescriptorFactory.defaultMarker(getMarkerHue(hotSpots.get(i).getAccessLevel())));
+                    closeMarker.setSnippet(hotSpots.get(i).getSecurityKey());
+                }
+            }
+        }
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(hotSpotPos)
+                .target(userSeletedPosition)
                 .zoom(initialZoom)
                 .build();
 
@@ -131,5 +147,54 @@ public class ViewLocationActivity extends FragmentActivity implements OnMapReady
             public void onMarkerDragEnd(Marker marker) {
             }
         });
+    }
+
+    private double calculateHotSpotDistance(HotSpot other)
+    {
+        double longitudeOriginal = userSeletedPosition.longitude;
+        double latitudeOriginal = userSeletedPosition.latitude;
+
+        double longitudeOther = other.getLongitude();
+        double latitudeOther = other.getLatitude();
+
+        // Zracunamo oddaljenost glede na sfericni zakon kosinusov
+        return (Math.acos(Math.sin(latitudeOriginal * Math.PI/180) * Math.sin(latitudeOther * Math.PI/180)
+                + Math.cos(latitudeOriginal * Math.PI/180) * Math.cos(latitudeOther * Math.PI/180) * Math.cos(longitudeOther * Math.PI/180 - longitudeOriginal * Math.PI/180) * 6371000) * 6371000);
+    }
+
+    private String getPasswordString(String SecKey, HotSpot.Accessibility access)
+    {
+        String password;
+
+        if (access == HotSpot.Accessibility.PUBLIC) {
+            password = res.getString(R.string.noPassWordRequired);
+        }
+        else if(access == HotSpot.Accessibility.INACCESSIBLE)
+        {
+            password = res.getString(R.string.passwordInaccessible);
+        }
+        else
+        {
+            password = res.getString(R.string.password) + ": " + SecKey;
+        }
+
+        return password;
+    }
+
+    private float getMarkerHue(HotSpot.Accessibility access){
+
+        float hue;
+
+        if (access == HotSpot.Accessibility.PRIVATE) {
+            hue = BitmapDescriptorFactory.HUE_BLUE;
+        } else if (access == HotSpot.Accessibility.PUBLIC) {
+            hue = BitmapDescriptorFactory.HUE_GREEN;
+        } else if (access == HotSpot.Accessibility.SECURE) {
+            hue = BitmapDescriptorFactory.HUE_YELLOW;
+        } else {
+            hue = BitmapDescriptorFactory.HUE_RED;
+        }
+
+        return hue;
     }
 }

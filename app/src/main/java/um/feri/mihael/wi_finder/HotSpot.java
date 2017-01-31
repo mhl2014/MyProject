@@ -13,7 +13,6 @@ public class HotSpot {
     public static final int badRatingScore = 1;
     public static final int noAccessRatingScore = 0;
 
-    // Should be assert checked
     public static final String NOACCESS_RATING_ARFF = "no_access";
     public static final String BAD_RATING_ARFF = "bad";
     public static final String OK_RATING_ARFF = "OK";
@@ -77,9 +76,7 @@ public class HotSpot {
     public void addRatingToAverage(String rating)
     {
         int ratingScore;
-        if(rating.equals(NOACCESS_RATING_ARFF))
-            ratingScore = noAccessRatingScore;
-        else if(rating.equals(BAD_RATING_ARFF))
+        if(rating.equals(BAD_RATING_ARFF))
             ratingScore = badRatingScore;
         else if(rating.equals(OK_RATING_ARFF))
             ratingScore = okRatingScore;
@@ -88,8 +85,7 @@ public class HotSpot {
         else if(rating.equals(GREAT_RATING_ARFF))
             ratingScore = greatRatingScore;
         else
-            throw new IllegalArgumentException("Unknown rating provided");
-
+            ratingScore = noAccessRatingScore;
 
         averageRating = (averageRating + ratingScore) / (visitsCounter + 1);
         visitsCounter++;
@@ -146,4 +142,23 @@ public class HotSpot {
     public String getClassifierRating() { return classifierRating; }
 
     public void setClassifierRating(String rating) { classifierRating = rating; }
+
+    public float getClassifierRatingAsNumber()
+    {
+        int ratingScore;
+
+        if(classifierRating.equals("BAD_RATING_ARFF"))
+            ratingScore = badRatingScore;
+        else if(classifierRating.equals("OK_RATING_ARFF"))
+            ratingScore = okRatingScore;
+        else if(classifierRating.equals("GOOD_RATING_ARFF"))
+            ratingScore = goodRatingScore;
+        else if(classifierRating.equals("GREAT_RATING_ARFF"))
+            ratingScore = greatRatingScore;
+        else
+            ratingScore = noAccessRatingScore;
+
+        return ratingScore;
+    }
 }
+

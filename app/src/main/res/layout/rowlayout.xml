@@ -37,7 +37,20 @@
         android:layout_toRightOf="@+id/listIcon"
         android:layout_toEndOf="@+id/listIcon"/>
 
-    <ImageButton
+    <RatingBar
+        android:id="@+id/hotSpotRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="4"
+        android:rating="0"
+        android:isIndicator="true"
+        android:stepSize="1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center_vertical"
+        />
+
+    <!--<ImageButton
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:scaleType="fitCenter"
@@ -48,5 +61,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:padding="16dp"
-        android:layout_margin="6dp"/>
+        android:layout_margin="6dp"/>-->
 </RelativeLayout>

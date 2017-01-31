@@ -11,10 +11,11 @@ import android.net.wifi.WifiManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
+/*
  * Created by Mihael on 21. 06. 2016.
  */
 public class WiFiBroadcastReceiver extends BroadcastReceiver {

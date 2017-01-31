@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
+/*
  * Created by Mihael on 21. 06. 2016.
  */
 public class AdapterNewHotSpot extends RecyclerView.Adapter<AdapterNewHotSpot.ViewHolder> {
